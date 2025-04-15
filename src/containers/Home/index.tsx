@@ -9,7 +9,7 @@ export const Home = () => {
   const router = useRouter();
 
   const handleGetStarted = () => {
-    router.push(Paths.WATER_INTAKE);
+    router.push(Paths.MANAGEMENT_USER);
   };
 
   return (

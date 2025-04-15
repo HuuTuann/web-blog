@@ -1,3 +1,3 @@
 export enum Paths {
-  WATER_INTAKE = "/water-intake",
+  MANAGEMENT_USER = "/management-user",
 }

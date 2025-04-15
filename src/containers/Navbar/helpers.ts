@@ -1,5 +1,5 @@
 import { Paths } from "@/constants";
 
 export const headerTitleMap = {
-  [Paths.WATER_INTAKE]: "Water Intake",
+  [Paths.MANAGEMENT_USER]: "Quản lý người dùng",
 } as const;

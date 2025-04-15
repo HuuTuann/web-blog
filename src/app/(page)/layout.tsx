@@ -10,8 +10,8 @@ export default function PageLayout({
 }>) {
   const sideBarOptions: SideBarOptions[] = [
     {
-      path: Paths.WATER_INTAKE,
-      label: "Water Intake",
+      path: Paths.MANAGEMENT_USER,
+      label: "Quản lý người dùng",
       icon: <Icons.WaterIntake />,
     },
   ] as const;
