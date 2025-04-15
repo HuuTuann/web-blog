@@ -21,7 +21,7 @@ export const SideBar = ({ sideBarOptions }: Props) => {
   return (
     <div className="flex h-full flex-col gap-1 border-r-2 border-slate-300 p-2">
       <div onClick={handleLogoClick} className="flex cursor-pointer">
-        <Image src="/logo.svg" alt="Infinite One" className="h-16" />
+        <Image src="/logo.svg" alt="Best CV" className="h-16" />
       </div>
       <div className="flex flex-1 flex-col gap-1">
         {sideBarOptions.map((option) => {

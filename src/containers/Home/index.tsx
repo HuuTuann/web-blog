@@ -15,7 +15,7 @@ export const Home = () => {
   return (
     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden bg-slate-950">
       <div className="absolute z-50 flex flex-col items-center justify-center gap-10 rounded-3xl bg-slate-50 p-10">
-        <Image src="logo.svg" alt="Infinite One" className="w-96" />
+        <Image src="logo.svg" alt="Best CV" className="w-96" />
         <Button
           size="lg"
           variant="ioSolid"
