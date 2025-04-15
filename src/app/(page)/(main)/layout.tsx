@@ -3,7 +3,7 @@ import { Paths } from "@/constants";
 import { Navbar, SideBar } from "@/containers";
 import { SideBarOptions } from "@/types";
 
-export default function PageLayout({
+export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
