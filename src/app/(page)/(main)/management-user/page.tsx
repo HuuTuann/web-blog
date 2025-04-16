@@ -1,3 +1,5 @@
-export default function WaterIntakePage() {
-  return <>Water Intake</>;
+import { ManagementUser } from "@/containers";
+
+export default function ManagementUserPage() {
+  return <ManagementUser />;
 }
