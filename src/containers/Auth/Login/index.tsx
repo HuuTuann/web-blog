@@ -4,11 +4,13 @@ import { Button, Link } from "@/components";
 import { LoginKeys } from "@/constants";
 import { Form, Input } from "@heroui/react";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { useLoginForm } from "./useLoginForm";
 
 export const Login = () => {
+  const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const { isLoadingLogin, control, onSubmit } = useLoginForm();
 
@@ -76,8 +78,12 @@ export const Login = () => {
           Login
         </Button>
       </Form>
-      {/* TODO: Replace '#' with the correct route for account creation */}
-      <Link href="#" isBlock showAnchorIcon color="io">
+      <Link
+        isBlock
+        showAnchorIcon
+        color="io"
+        onPress={() => router.push("/register")}
+      >
         Create an account
       </Link>
     </div>

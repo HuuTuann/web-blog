@@ -1,22 +1,22 @@
-import { useLogin } from "@/queries";
-import { LoginPayload } from "@/types";
+import { useRegister } from "@/queries";
+import { RegisterFormValues, RegisterPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { initialValues, loginSchema } from "./helpers";
+import { initialValues, registerSchema } from "./helpers";
 
-export const useLoginForm = () => {
-  const { handleSubmit, ...formReturns } = useForm<LoginPayload>({
+export const useRegisterForm = () => {
+  const { handleSubmit, ...formReturns } = useForm<RegisterFormValues>({
     defaultValues: initialValues,
     mode: "onBlur",
     reValidateMode: "onBlur",
     shouldFocusError: true,
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(registerSchema),
   });
 
-  const { onLogin, isLoadingLogin } = useLogin(); // Assuming you want to use the login mutation here
+  const { onRegister, isLoadingRegister } = useRegister(); // Assuming you want to use the login mutation here
 
-  const handleLogin = (values: LoginPayload) => {
-    onLogin(values, {
+  const handleLogin = (values: RegisterPayload) => {
+    onRegister(values, {
       onSuccess: () => {
         // Handle successful login here, e.g., redirect or show a success message
       },
@@ -29,7 +29,7 @@ export const useLoginForm = () => {
 
   return {
     ...formReturns,
-    isLoadingLogin,
+    isLoadingRegister,
     onSubmit: handleSubmit(handleLogin),
   };
 };
