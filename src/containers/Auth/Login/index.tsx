@@ -1,26 +1,21 @@
 "use client";
 
-import { Button } from "@/components";
+import { Button, Link } from "@/components";
 import { LoginKeys } from "@/constants";
-import { LoginPayload } from "@/types";
 import { Form, Input } from "@heroui/react";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { Controller } from "react-hook-form";
-import { useLogin } from "./useLogin";
+import { useLoginForm } from "./useLoginForm";
 
 export const Login = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { control, handleSubmit } = useLogin();
-
-  const onSubmit = (data: LoginPayload) => {
-    console.log(data);
-  };
+  const { isLoadingLogin, control, onSubmit } = useLoginForm();
 
   return (
-    <div className="flex min-w-96 flex-col gap-5 rounded-3xl bg-slate-50 p-10">
+    <div className="flex min-w-96 flex-col items-center gap-2 rounded-3xl bg-slate-50 p-10">
       <h1 className="text-center text-3xl font-bold">Login</h1>
-      <Form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+      <Form className="flex w-full flex-col gap-5 pt-3" onSubmit={onSubmit}>
         <Controller
           name={LoginKeys.EMAIL}
           control={control}
@@ -72,10 +67,19 @@ export const Login = () => {
             />
           )}
         />
+        <Button
+          type="submit"
+          variant="ioSolid"
+          className="mt-3 w-full"
+          isLoading={isLoadingLogin}
+        >
+          Login
+        </Button>
       </Form>
-      <Button variant="ioSolid" onPress={() => handleSubmit(onSubmit)()}>
-        Login
-      </Button>
+      {/* TODO: Replace '#' with the correct route for account creation */}
+      <Link href="#" isBlock showAnchorIcon color="io">
+        Create an account
+      </Link>
     </div>
   );
 };
