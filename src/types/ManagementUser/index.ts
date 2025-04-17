@@ -1,4 +1,6 @@
 import { ManagementUserKeys } from "@/constants";
+import { UseQueryOptions } from "@tanstack/react-query";
+import { PageResponseType, TableParams } from "../Base";
 
 export interface ManagementUserResponse {
   [ManagementUserKeys.FULL_NAME]: string;
@@ -11,4 +13,13 @@ export interface ManagementUserResponse {
   [ManagementUserKeys.ROLE]: string;
   [ManagementUserKeys.AVATAR]: string;
   [ManagementUserKeys.ID]: string;
+}
+
+export interface UseGetUserParams {
+  defaultParams?: TableParams;
+  options?: UseQueryOptions<
+    PageResponseType<ManagementUserResponse>,
+    Error,
+    PageResponseType<ManagementUserResponse>
+  >;
 }

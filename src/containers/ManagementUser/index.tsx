@@ -1,11 +1,12 @@
 "use client";
 
 import { ManagementUserKeys } from "@/constants";
-import { ManagementUserResponse } from "@/types";
+import { useGetUsers } from "@/queries";
 import {
   Pagination,
   Select,
   SelectItem,
+  SharedSelection,
   Table,
   TableBody,
   TableCell,
@@ -16,68 +17,22 @@ import {
 import { allColumnsForTable, renderCell } from "./allColumns";
 
 export const ManagementUser = () => {
-  const mockData: ManagementUserResponse[] = [
-    {
-      [ManagementUserKeys.ID]: "user-001",
-      [ManagementUserKeys.FULL_NAME]: "Nguyễn Văn A",
-      [ManagementUserKeys.EMAIL]: "nguyenvana@example.com",
-      [ManagementUserKeys.IS_ACTIVE]: true,
-      [ManagementUserKeys.CREATED_AT]: "2023-01-15T08:30:00Z",
-      [ManagementUserKeys.MODIFIED_AT]: "2023-06-20T14:25:00Z",
-      [ManagementUserKeys.CREATED_BY]: "admin-001",
-      [ManagementUserKeys.MODIFIED_BY]: "admin-002",
-      [ManagementUserKeys.ROLE]: "Manager",
-      [ManagementUserKeys.AVATAR]: "https://example.com/avatars/user-001.jpg",
-    },
-    {
-      [ManagementUserKeys.ID]: "user-002",
-      [ManagementUserKeys.FULL_NAME]: "Trần Thị B",
-      [ManagementUserKeys.EMAIL]: "tranthib@example.com",
-      [ManagementUserKeys.IS_ACTIVE]: false,
-      [ManagementUserKeys.CREATED_AT]: "2023-02-10T10:15:00Z",
-      [ManagementUserKeys.MODIFIED_AT]: "2023-05-05T09:40:00Z",
-      [ManagementUserKeys.CREATED_BY]: "admin-001",
-      [ManagementUserKeys.MODIFIED_BY]: "admin-001",
-      [ManagementUserKeys.ROLE]: "Staff",
-      [ManagementUserKeys.AVATAR]: "https://example.com/avatars/user-002.jpg",
-    },
-    {
-      [ManagementUserKeys.ID]: "user-003",
-      [ManagementUserKeys.FULL_NAME]: "Lê Văn C",
-      [ManagementUserKeys.EMAIL]: "levanc@example.com",
-      [ManagementUserKeys.IS_ACTIVE]: true,
-      [ManagementUserKeys.CREATED_AT]: "2023-03-25T13:50:00Z",
-      [ManagementUserKeys.MODIFIED_AT]: "2023-07-12T16:30:00Z",
-      [ManagementUserKeys.CREATED_BY]: "admin-003",
-      [ManagementUserKeys.MODIFIED_BY]: "admin-003",
-      [ManagementUserKeys.ROLE]: "Admin",
-      [ManagementUserKeys.AVATAR]: "https://example.com/avatars/user-003.jpg",
-    },
-    {
-      [ManagementUserKeys.ID]: "user-004",
-      [ManagementUserKeys.FULL_NAME]: "Lê Văn C",
-      [ManagementUserKeys.EMAIL]: "levanc@example.com",
-      [ManagementUserKeys.IS_ACTIVE]: true,
-      [ManagementUserKeys.CREATED_AT]: "2023-03-25T13:50:00Z",
-      [ManagementUserKeys.MODIFIED_AT]: "2023-07-12T16:30:00Z",
-      [ManagementUserKeys.CREATED_BY]: "admin-003",
-      [ManagementUserKeys.MODIFIED_BY]: "admin-003",
-      [ManagementUserKeys.ROLE]: "Admin",
-      [ManagementUserKeys.AVATAR]: "https://example.com/avatars/user-003.jpg",
-    },
-    {
-      [ManagementUserKeys.ID]: "user-005",
-      [ManagementUserKeys.FULL_NAME]: "Lê Văn C",
-      [ManagementUserKeys.EMAIL]: "levanc@example.com",
-      [ManagementUserKeys.IS_ACTIVE]: true,
-      [ManagementUserKeys.CREATED_AT]: "2023-03-25T13:50:00Z",
-      [ManagementUserKeys.MODIFIED_AT]: "2023-07-12T16:30:00Z",
-      [ManagementUserKeys.CREATED_BY]: "admin-003",
-      [ManagementUserKeys.MODIFIED_BY]: "admin-003",
-      [ManagementUserKeys.ROLE]: "Admin",
-      [ManagementUserKeys.AVATAR]: "https://example.com/avatars/user-003.jpg",
-    },
-  ];
+  const { users, totalPagesUsers, usersParams, setUsersParams } = useGetUsers();
+
+  const handlePageSizeChange = (keys: SharedSelection) => {
+    const pageSize = Number(Array.from(keys)[0]);
+    setUsersParams((prev) => ({
+      ...prev,
+      pageSize,
+    }));
+  };
+
+  const handlePageNoChange = (pageNo: number) => {
+    setUsersParams((prev) => ({
+      ...prev,
+      pageNo: pageNo - 1,
+    }));
+  };
 
   return (
     <Table
@@ -86,19 +41,22 @@ export const ManagementUser = () => {
         <div className="flex w-full justify-center gap-2">
           <Select
             aria-label="page-size"
-            defaultSelectedKeys={"5"}
             variant="bordered"
             className="w-24"
+            disallowEmptySelection
+            defaultSelectedKeys={[usersParams?.pageSize?.toString() ?? "10"]}
+            onSelectionChange={handlePageSizeChange}
           >
-            <SelectItem key="5">5</SelectItem>
-            <SelectItem key="10">10</SelectItem>
-            <SelectItem key="15">15</SelectItem>
+            <SelectItem key={"10"}>10</SelectItem>
+            <SelectItem key={"15"}>15</SelectItem>
+            <SelectItem key={"20"}>20</SelectItem>
           </Select>
           <Pagination
             aria-label="page-no"
             showControls
-            initialPage={1}
-            total={10}
+            initialPage={usersParams?.pageNo}
+            total={totalPagesUsers}
+            onChange={handlePageNoChange}
           />
         </div>
       }
@@ -117,11 +75,11 @@ export const ManagementUser = () => {
         )}
       </TableHeader>
       <TableBody>
-        {mockData.map((row) => (
-          <TableRow key={row[ManagementUserKeys.ID]}>
+        {users.map((user) => (
+          <TableRow key={user[ManagementUserKeys.ID]}>
             {(columnKey) => (
               <TableCell className="overflow-hidden text-ellipsis text-nowrap">
-                {renderCell(row, columnKey)}
+                {renderCell(user, columnKey)}
               </TableCell>
             )}
           </TableRow>

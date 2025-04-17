@@ -1,4 +1,5 @@
 import { DateFormat } from "@/constants/DateFormat";
+import { ParamsType } from "@/types";
 import dayjs from "dayjs";
 import { isEmpty } from "lodash";
 
@@ -13,3 +14,16 @@ export function formatDate(
   }
   return dayjs(value).format(format);
 }
+
+export const stringifyParams = (params: ParamsType) => {
+  let result = "";
+
+  if (!params) return result;
+  Object.keys(params).forEach((key) => {
+    if (params[key]) {
+      result += `${key}=${params[key]}&`;
+    }
+  });
+
+  return result.slice(0, -1);
+};
