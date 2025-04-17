@@ -1,5 +1,6 @@
 "use client";
 
+import { DialogProvider } from "@/hooks";
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
 import QueryProvider from "./QueryClient";
 
@@ -8,7 +9,7 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
     <QueryProvider>
       <HeroUIProvider validationBehavior="aria">
         <ToastProvider placement="top-right" />
-        {children}
+        <DialogProvider>{children}</DialogProvider>
       </HeroUIProvider>
     </QueryProvider>
   );
