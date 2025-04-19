@@ -94,7 +94,12 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-      <Modal size={size} isOpen={isOpen} onClose={hideDialog}>
+      <Modal
+        size={size}
+        isOpen={isOpen}
+        onClose={hideDialog}
+        scrollBehavior="inside"
+      >
         <ModalContent>
           <ModalHeader>{title || "Dialog"}</ModalHeader>
           <ModalBody>{content}</ModalBody>
@@ -102,7 +107,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
             <ModalFooter>
               {!hideCancel && (
                 <Button
-                  variant="light"
+                  variant="ioLight"
                   onPress={() => {
                     onCancel && onCancel();
                     hideDialog();
@@ -112,7 +117,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
                 </Button>
               )}
               <Button
-                color="primary"
+                variant="ioSolid"
                 onPress={() => {
                   onOk && onOk();
                   hideDialog();

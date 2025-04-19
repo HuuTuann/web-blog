@@ -6,7 +6,7 @@ import {
   TableParams,
   UseGetUserParams,
 } from "@/types";
-import { ManagementUserResponse } from "@/types/ManagementUser";
+import { ListUsersResponse } from "@/types/ManagementUser";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -17,9 +17,9 @@ export const useGetUsers = ({
   const [params, setParams] = useState<TableParams>(defaultParams);
 
   const { data, isLoading } = useQuery<
-    PageResponseType<ManagementUserResponse>,
+    PageResponseType<ListUsersResponse>,
     Error,
-    PageResponseType<ManagementUserResponse>
+    PageResponseType<ListUsersResponse>
   >({
     queryKey: [QueryKey.GET_USERS, params],
     queryFn: ({ queryKey }) => {
@@ -36,7 +36,7 @@ export const useGetUsers = ({
     });
   };
 
-  const { data: users = [], totalPages = 10 } = data || {};
+  const { data: users = [], totalPages = 1 } = data || {};
 
   return {
     users,

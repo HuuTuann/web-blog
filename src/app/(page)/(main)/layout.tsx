@@ -19,9 +19,9 @@ export default function MainLayout({
   return (
     <div className="flex h-screen w-screen">
       <SideBar sideBarOptions={sideBarOptions} />
-      <div className="flex max-w-full flex-1 flex-shrink flex-col overflow-hidden">
+      <div className="flex h-full w-full flex-1 flex-shrink flex-col overflow-hidden">
         <Navbar />
-        <div className="flex flex-1 p-4">{children}</div>
+        <div className="h-[calc(100%-76px)] p-4">{children}</div>
       </div>
     </div>
   );

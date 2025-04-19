@@ -1,6 +1,6 @@
 import { ManagementUserKeys } from "@/constants";
 import { formatDate } from "@/lib";
-import { ManagementUserResponse } from "@/types";
+import { ListUsersResponse } from "@/types";
 import { Button, Chip, User } from "@heroui/react";
 import { UserPen, UserRoundX } from "lucide-react";
 
@@ -32,10 +32,12 @@ export const allColumnsForTable = [
 ];
 
 export const renderCell = (
-  managementUser: ManagementUserResponse,
+  managementUser: ListUsersResponse,
   columnKey: React.Key,
+  handleUpdateUser: (id: string) => void,
+  handleDeleteUser: (id: string) => void,
 ) => {
-  const cellValue = managementUser[columnKey as keyof ManagementUserResponse];
+  const cellValue = managementUser[columnKey as keyof ListUsersResponse];
 
   switch (columnKey) {
     case ManagementUserKeys.FULL_NAME:
@@ -90,12 +92,25 @@ export const renderCell = (
       );
 
     case ManagementUserKeys.ACTIONS:
+      const id = managementUser[ManagementUserKeys.ID];
+
       return (
         <div className="flex items-center justify-center gap-2">
-          <Button isIconOnly size="sm" variant="light">
+          <Button
+            isIconOnly
+            size="sm"
+            variant="light"
+            onPress={() => handleUpdateUser(id)}
+          >
             <UserPen className="text-slate-400" size={24} />
           </Button>
-          <Button isIconOnly size="sm" variant="light" color="danger">
+          <Button
+            isIconOnly
+            size="sm"
+            variant="light"
+            color="danger"
+            onPress={() => handleDeleteUser(id)}
+          >
             <UserRoundX className="text-red-400" size={24} />
           </Button>
         </div>
