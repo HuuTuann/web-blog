@@ -23,7 +23,7 @@ export const useGetUsers = ({
   >({
     queryKey: [QueryKey.GET_USERS, params],
     queryFn: ({ queryKey }) => {
-      const [_, queryParams] = queryKey;
+      const [, queryParams] = queryKey;
       return getUsers(queryParams as TableParams);
     },
     ...options,

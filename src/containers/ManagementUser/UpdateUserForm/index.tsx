@@ -53,7 +53,7 @@ export const UpdateUserForm = ({ id }: Props) => {
         <Controller
           name={ManagementUserKeys.AVATAR}
           control={control}
-          render={({ field: { value, onChange, ...restField } }) => (
+          render={() => (
             <div className="w-full">
               <label className="text-sm font-medium text-gray-700">
                 Avatar
@@ -83,7 +83,6 @@ export const UpdateUserForm = ({ id }: Props) => {
                   }
                 }}
                 className="hidden"
-                {...restField}
               />
             </div>
           )}

@@ -163,7 +163,7 @@ export const Register = () => {
             <Controller
               name={RegisterKeys.AVATAR}
               control={control}
-              render={({ field: { value, onChange, ...restField } }) => (
+              render={() => (
                 <div className="w-full">
                   <label className="text-sm font-medium text-gray-700">
                     Avatar
@@ -193,7 +193,6 @@ export const Register = () => {
                       }
                     }}
                     className="hidden"
-                    {...restField}
                   />
                 </div>
               )}

@@ -19,7 +19,7 @@ export const useGetUserDetail = ({
   >({
     queryKey: [QueryKey.GET_USER_DETAIL, params],
     queryFn: ({ queryKey }) => {
-      const [_, queryParams] = queryKey;
+      const [, queryParams] = queryKey;
       return getUserDetail(queryParams as GetUserDetailParams);
     },
     ...options,

@@ -109,7 +109,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
                 <Button
                   variant="ioLight"
                   onPress={() => {
-                    onCancel && onCancel();
+                    onCancel?.();
                     hideDialog();
                   }}
                 >
@@ -119,7 +119,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
               <Button
                 variant="ioSolid"
                 onPress={() => {
-                  onOk && onOk();
+                  onOk?.();
                   hideDialog();
                 }}
               >
