@@ -5,10 +5,14 @@ export interface RegisterFormValues {
   [RegisterKeys.PASSWORD]: string;
   [RegisterKeys.CONFIRM_PASSWORD]: string;
   [RegisterKeys.EMAIL]: string;
-  [RegisterKeys.AVATAR]?: string;
+  [RegisterKeys.AVATAR]: string;
+  [RegisterKeys.ROLE]: string;
 }
 
-export type RegisterPayload = Omit<
-  RegisterFormValues,
-  RegisterKeys.CONFIRM_PASSWORD
->;
+export interface RegisterPayload
+  extends Omit<
+    RegisterFormValues,
+    RegisterKeys.CONFIRM_PASSWORD | RegisterKeys.ROLE
+  > {
+  [RegisterKeys.ROLE]: number;
+}

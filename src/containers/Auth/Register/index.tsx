@@ -1,12 +1,15 @@
 "use client";
 
+import { Icons } from "@/assets";
 import { Button, Link } from "@/components";
 import { RegisterKeys } from "@/constants";
-import { Form, Input } from "@heroui/react";
+import { uploadImageToCloudinary } from "@/services";
+import { Form, Image, Input, Select, SelectItem } from "@heroui/react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Controller } from "react-hook-form";
+import { Controller, useWatch } from "react-hook-form";
+import { roleOptions } from "./helpers";
 import { useRegisterForm } from "./useRegisterForm";
 
 export const Register = () => {
@@ -14,12 +17,17 @@ export const Register = () => {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
   const [isVisibleConfirmPassword, setIsVisibleConfirmPassword] =
     useState(false);
-  const { isLoadingRegister, control, onSubmit } = useRegisterForm();
+  const { isLoadingRegister, control, onSubmit, setValue } = useRegisterForm();
+
+  const avatarUrl = useWatch({
+    control,
+    name: RegisterKeys.AVATAR,
+  });
 
   return (
-    <div className="flex min-w-96 flex-col items-center gap-2 rounded-3xl bg-slate-50 p-10">
+    <div className="flex max-h-[calc(100vh-4rem)] w-1/2 flex-col items-center gap-2 overflow-y-auto rounded-3xl bg-slate-50 p-10">
       <h1 className="text-center text-3xl font-bold">Register</h1>
-      <Form className="flex w-full flex-col gap-5 pt-3" onSubmit={onSubmit}>
+      <Form className="grid w-full grid-cols-2 pt-3" onSubmit={onSubmit}>
         <Controller
           name={RegisterKeys.FULLNAME}
           control={control}
@@ -122,10 +130,81 @@ export const Register = () => {
             />
           )}
         />
+        <Controller
+          name={RegisterKeys.ROLE}
+          control={control}
+          render={({
+            field,
+            fieldState: { invalid, error: { message } = { message: "" } },
+          }) => (
+            <Select
+              label="Role"
+              labelPlacement="outside"
+              placeholder="Enter your role"
+              variant="bordered"
+              isInvalid={invalid}
+              errorMessage={message}
+              {...field}
+            >
+              {roleOptions.map((option) => (
+                <SelectItem key={option.value}>{option.label}</SelectItem>
+              ))}
+            </Select>
+          )}
+        />
+        <div className="col-span-2">
+          {avatarUrl ? (
+            <Image
+              src={avatarUrl}
+              alt="Avatar"
+              className="flex w-full rounded-md object-cover"
+            />
+          ) : (
+            <Controller
+              name={RegisterKeys.AVATAR}
+              control={control}
+              render={({ field: { value, onChange, ...restField } }) => (
+                <div className="w-full">
+                  <label className="text-sm font-medium text-gray-700">
+                    Avatar
+                  </label>
+                  <label
+                    htmlFor="avatar"
+                    className="flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 p-4 text-center hover:bg-gray-100"
+                  >
+                    <Icons.NoImage size={96} />
+                    <p className="mt-2 text-sm text-slate-500">
+                      Click or drag file to this area to upload
+                    </p>
+                  </label>
+                  <input
+                    type="file"
+                    id="avatar"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        try {
+                          const url = await uploadImageToCloudinary(file);
+                          setValue(RegisterKeys.AVATAR, url);
+                        } catch (error) {
+                          console.error("Upload failed:", error);
+                        }
+                      }
+                    }}
+                    className="hidden"
+                    {...restField}
+                  />
+                </div>
+              )}
+            />
+          )}
+        </div>
+
         <Button
           type="submit"
           variant="ioSolid"
-          className="mt-3 w-full"
+          className="col-span-2 mt-3 w-full"
           isLoading={isLoadingRegister}
         >
           Register

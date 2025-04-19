@@ -7,16 +7,21 @@ import { initialValues, registerSchema } from "./helpers";
 export const useRegisterForm = () => {
   const { handleSubmit, ...formReturns } = useForm<RegisterFormValues>({
     defaultValues: initialValues,
-    mode: "onBlur",
-    reValidateMode: "onBlur",
+    mode: "onChange",
+    reValidateMode: "onChange",
     shouldFocusError: true,
     resolver: zodResolver(registerSchema),
   });
 
   const { onRegister, isLoadingRegister } = useRegister(); // Assuming you want to use the login mutation here
 
-  const handleLogin = (values: RegisterPayload) => {
-    onRegister(values, {
+  const handleLogin = (values: RegisterFormValues) => {
+    const payload: RegisterPayload = {
+      ...values,
+      roleId: Number(values.roleId),
+    };
+
+    onRegister(payload, {
       onSuccess: () => {
         // Handle successful login here, e.g., redirect or show a success message
       },

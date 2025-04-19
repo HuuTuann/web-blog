@@ -1,4 +1,4 @@
-import { RegisterKeys } from "@/constants";
+import { RegisterKeys, RegisterRole } from "@/constants";
 import { RegisterFormValues } from "@/types";
 import { z } from "zod";
 
@@ -17,6 +17,12 @@ export const registerSchema = z
     [RegisterKeys.FULLNAME]: z.string().nonempty({
       message: "Full name is required",
     }),
+    [RegisterKeys.AVATAR]: z.string().nonempty({
+      message: "Avatar is required",
+    }),
+    [RegisterKeys.ROLE]: z.string().nonempty({
+      message: "Role is required",
+    }),
   })
   .refine(
     (data) =>
@@ -33,4 +39,13 @@ export const initialValues: RegisterFormValues = {
   [RegisterKeys.EMAIL]: "",
   [RegisterKeys.FULLNAME]: "",
   [RegisterKeys.AVATAR]: "",
+  [RegisterKeys.ROLE]: "",
 };
+
+export const roleOptions = [
+  {
+    label: "Business",
+    value: RegisterRole.BUSINESS,
+  },
+  { label: "Candidate", value: RegisterRole.CANDIDATE },
+];
