@@ -21,9 +21,11 @@ export const useLoginForm = () => {
 
   const handleLogin = (values: LoginPayload) => {
     onLogin(values, {
-      onSuccess: (data: any) => {
-        setCookie(data?.data, 7);
-        router.push(Paths.MANAGEMENT_USER);
+      onSuccess: (data: unknown) => {
+        if (data && typeof data === "object" && "data" in data) {
+          setCookie((data as { data: string }).data, 7);
+          router.push(Paths.MANAGEMENT_USER);
+        }
       },
       onError: (error) => {
         // Handle error here, e.g., show an error message

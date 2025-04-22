@@ -10,6 +10,6 @@ export const loginSchema = z.object({
 });
 
 export const initialValues: LoginPayload = {
-  [LoginKeys.EMAIL]: "tiendat2@gmail.com",
-  [LoginKeys.PASSWORD]: "Tiendat12345#@",
+  [LoginKeys.EMAIL]: "",
+  [LoginKeys.PASSWORD]: "",
 };
