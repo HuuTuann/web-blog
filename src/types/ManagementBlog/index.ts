@@ -1,6 +1,6 @@
 import { ManagementBlogKeys } from "@/constants";
 import { UseQueryOptions } from "@tanstack/react-query";
-import { PageResponseType, TableParams } from "../Base";
+import { PageResponseType, ResponseType, TableParams } from "../Base";
 
 export interface ListBlogsResponse {
   [ManagementBlogKeys.ID]: number;
@@ -33,18 +33,18 @@ export interface BlogDetailResponse extends ListBlogsResponse {
 }
 
 export interface GetBlogDetailParams {
-  [ManagementBlogKeys.TITLE]: string;
+  [ManagementBlogKeys.ID]: number;
 }
 
-// export interface UseGetBlogDetailParams {
-//   params?: GetBlogDetailParams;
-//   options?: UseQueryOptions<
-//     ResponseType<BlogDetailResponse>,
-//     Error,
-//     ResponseType<BlogDetailResponse>
-//   >;
-// }
+export interface UseGetBlogDetailParams {
+  params?: GetBlogDetailParams;
+  options?: UseQueryOptions<
+    ResponseType<BlogDetailResponse>,
+    Error,
+    ResponseType<BlogDetailResponse>
+  >;
+}
 
-// export interface DeleteBlogPayload {
-//   [ManagementBlogKeys.ID]: number;
-// }
+export interface DeleteBlogPayload {
+  [ManagementBlogKeys.ID]: number;
+}

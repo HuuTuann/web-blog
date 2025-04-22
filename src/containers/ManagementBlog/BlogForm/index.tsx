@@ -114,7 +114,7 @@ export const BlogForm = ({ id }: Props) => {
           Cancel
         </Button>
         <Button type="submit" variant="ioSolid">
-          Create
+          {id ? "Update" : "Create"}
         </Button>
       </div>
     </Form>

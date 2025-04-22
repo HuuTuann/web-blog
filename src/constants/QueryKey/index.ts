@@ -3,4 +3,5 @@ export enum QueryKey {
   GET_USER_DETAIL = "GET_USER_DETAIL",
 
   GET_BLOGS = "GET_BLOGS",
+  GET_BLOG_DETAIL = "GET_BLOG_DETAIL",
 }

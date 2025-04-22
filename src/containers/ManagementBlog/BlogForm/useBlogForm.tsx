@@ -1,6 +1,8 @@
+import { ManagementBlogKeys } from "@/constants";
 import { useDialog } from "@/hooks";
-import { useCreateBlog, useGetBlogs } from "@/queries/ManagementBlog";
-import { BlogFormPayload } from "@/types/ManagementBlog";
+import { useCreateBlog, useGetBlogDetail, useGetBlogs } from "@/queries";
+import { useUpdateBlog } from "@/queries/ManagementBlog/useUpdateBlog";
+import { BlogFormPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, useForm } from "react-hook-form";
 import { blogHelpers } from "./helpers";
@@ -11,10 +13,15 @@ type Props = {
 
 export const useBlogForm = ({ id }: Props) => {
   const { hideDialog } = useDialog();
-  const formValues = blogHelpers.getInitialValues();
+
+  const { blogDetail, handleInvalidateBlogDetail } = useGetBlogDetail({
+    ...(id ? { params: { [ManagementBlogKeys.ID]: id } } : {}),
+  });
+  const formValues = blogHelpers.getInitialValues(blogDetail);
 
   const { handleInvalidateBlogs } = useGetBlogs();
   const { isLoadingCreateBlog, onCreateBlog } = useCreateBlog();
+  const { isLoadingUpdateBlog, onUpdateBlog } = useUpdateBlog();
 
   const { handleSubmit, ...formReturns } = useForm<BlogFormPayload>({
     defaultValues: blogHelpers.initialValues,
@@ -27,15 +34,28 @@ export const useBlogForm = ({ id }: Props) => {
 
   const onValid = (values: BlogFormPayload) => {
     console.log("Form values:", values);
-    onCreateBlog(values, {
-      onSuccess: () => {
-        hideDialog();
-        handleInvalidateBlogs();
-      },
-      onError: (error) => {
-        console.error("Error creating blog:", error);
-      },
-    });
+    if (id) {
+      onUpdateBlog(values, {
+        onSuccess: () => {
+          hideDialog();
+          handleInvalidateBlogs();
+          handleInvalidateBlogDetail();
+        },
+        onError: (error) => {
+          console.error("Error updating blog:", error);
+        },
+      });
+    } else {
+      onCreateBlog(values, {
+        onSuccess: () => {
+          hideDialog();
+          handleInvalidateBlogs();
+        },
+        onError: (error) => {
+          console.error("Error creating blog:", error);
+        },
+      });
+    }
   };
 
   const onInValid = (errors: FieldErrors<BlogFormPayload>) => {
@@ -44,7 +64,7 @@ export const useBlogForm = ({ id }: Props) => {
 
   return {
     ...formReturns,
-    isLoadingCreateBlog,
+    isLoadingAction: isLoadingCreateBlog || isLoadingUpdateBlog,
     onSubmit: handleSubmit(onValid, onInValid),
   };
 };

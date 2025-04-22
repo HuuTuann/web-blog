@@ -3,7 +3,7 @@
 import { Button } from "@/components";
 import { ManagementBlogKeys } from "@/constants";
 import { useDialog } from "@/hooks";
-import { useGetBlogs } from "@/queries/ManagementBlog";
+import { useDeleteBlog, useGetBlogs } from "@/queries/ManagementBlog";
 import {
   Pagination,
   Select,
@@ -28,6 +28,8 @@ export const ManagementBlog = () => {
     setBlogsParams,
     handleInvalidateBlogs,
   } = useGetBlogs();
+
+  const { onDeleteBlog } = useDeleteBlog();
 
   const handlePageSizeChange = (keys: SharedSelection) => {
     const pageSize = Number(Array.from(keys)[0]);
@@ -54,8 +56,40 @@ export const ManagementBlog = () => {
     });
   };
 
-  const handleUpdateBlog = (id: number) => {};
-  const handleDeleteBlog = (id: number) => {};
+  const handleUpdateBlog = (id: number) => {
+    showDialog({
+      title: "Update Blog",
+      content: <BlogForm id={id} />,
+      options: {
+        hideActions: true,
+      },
+    });
+  };
+
+  const handleDeleteBlog = (id: number) => {
+    showDialog({
+      title: "Delete Blog",
+      content: "Are you sure you want to delete this blog?",
+      options: {
+        onOk: () => {
+          onDeleteBlog(
+            {
+              [ManagementBlogKeys.ID]: id,
+            },
+            {
+              onSuccess: () => {
+                hideDialog();
+                handleInvalidateBlogs();
+              },
+              onError: (error) => {
+                console.error("Error deleting blog:", error);
+              },
+            },
+          );
+        },
+      },
+    });
+  };
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
