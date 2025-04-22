@@ -7,4 +7,5 @@ export enum ManagementBlogKeys {
   TITLE = "title",
   CONTENT = "content",
   ACTIONS = "actions",
+  IMAGE = "image",
 }

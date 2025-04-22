@@ -17,7 +17,6 @@ export const getUserDetail = async (params: GetUserDetailParams) => {
 };
 
 export const updateUser = async (payload: UpdateUserPayload) => {
-  console.log("🚀 ~ updateUser ~ payload:", payload);
   return httpService.put(`/api/users`, payload);
 };
 

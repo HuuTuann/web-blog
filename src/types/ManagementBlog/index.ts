@@ -21,14 +21,16 @@ export interface UseGetBlogParams {
   >;
 }
 
-// export interface UpdateBlogPayload {
-//   [ManagementBlogKeys.ID]: number;
-//   [ManagementBlogKeys.FULL_NAME]: string;
-//   [ManagementBlogKeys.PASSWORD]: string;
-//   [ManagementBlogKeys.AVATAR]?: string;
-// }
+export interface BlogFormPayload {
+  [ManagementBlogKeys.ID]: number;
+  [ManagementBlogKeys.CONTENT]: string;
+  [ManagementBlogKeys.TITLE]: string;
+  [ManagementBlogKeys.IMAGE]: string;
+}
 
-export type BlogDetailResponse = ListBlogsResponse;
+export interface BlogDetailResponse extends ListBlogsResponse {
+  [ManagementBlogKeys.IMAGE]: string;
+}
 
 export interface GetBlogDetailParams {
   [ManagementBlogKeys.TITLE]: string;

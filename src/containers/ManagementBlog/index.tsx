@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components";
 import { ManagementBlogKeys } from "@/constants";
 import { useDialog } from "@/hooks";
 import { useGetBlogs } from "@/queries/ManagementBlog";
@@ -16,6 +17,7 @@ import {
   TableRow,
 } from "@heroui/react";
 import { allColumnsForTable, renderCell } from "./allColumns";
+import { BlogForm } from "./BlogForm";
 
 export const ManagementBlog = () => {
   const { showDialog, hideDialog } = useDialog();
@@ -42,11 +44,26 @@ export const ManagementBlog = () => {
     }));
   };
 
+  const handleCreateBlog = () => {
+    showDialog({
+      title: "Create Blog",
+      content: <BlogForm />,
+      options: {
+        hideActions: true,
+      },
+    });
+  };
+
   const handleUpdateBlog = (id: number) => {};
   const handleDeleteBlog = (id: number) => {};
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
+      <div className="flex w-full justify-end">
+        <Button variant="ioBordered" onPress={handleCreateBlog}>
+          Create
+        </Button>
+      </div>
       <Table
         aria-label="Example table with dynamic content"
         isHeaderSticky

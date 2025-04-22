@@ -5,6 +5,8 @@ export const Button = extendVariants(Core, {
     variant: {
       ioSolid: "text-slate-100 bg-slate-900 hover:bg-slate-900/90",
       ioLight: "text-slate-900 bg-transparent hover:bg-slate-300",
+      ioBordered:
+        "text-slate-900 bg-transparent border border-slate-300 hover:bg-slate-300",
     },
     size: {
       sm: "text-sm px-4 py-2",
