@@ -1,10 +1,12 @@
 import { useRegister } from "@/queries";
 import { RegisterFormValues, RegisterPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { initialValues, registerSchema } from "./helpers";
 
 export const useRegisterForm = () => {
+  const router = useRouter();
   const { handleSubmit, ...formReturns } = useForm<RegisterFormValues>({
     defaultValues: initialValues,
     mode: "onChange",
@@ -13,7 +15,7 @@ export const useRegisterForm = () => {
     resolver: zodResolver(registerSchema),
   });
 
-  const { onRegister, isLoadingRegister } = useRegister(); // Assuming you want to use the login mutation here
+  const { onRegister, isLoadingRegister } = useRegister();
 
   const handleLogin = (values: RegisterFormValues) => {
     const payload: RegisterPayload = {
@@ -23,11 +25,11 @@ export const useRegisterForm = () => {
 
     onRegister(payload, {
       onSuccess: () => {
-        // Handle successful login here, e.g., redirect or show a success message
+        router.push("/login"); // Redirect to login page after successful registration
       },
       onError: (error) => {
         // Handle error here, e.g., show an error message
-        console.error("Login failed:", error);
+        console.error("Register failed:", error);
       },
     });
   };

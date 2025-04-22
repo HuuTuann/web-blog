@@ -1,5 +1,5 @@
 export enum RegisterKeys {
-  FULLNAME = "full_name",
+  FULLNAME = "fullName",
   PASSWORD = "password",
   CONFIRM_PASSWORD = "confirm_password",
   EMAIL = "email",
