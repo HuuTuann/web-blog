@@ -1,8 +1,8 @@
 "use client";
 
-import { ManagementUserKeys } from "@/constants";
+import { ManagementBlogKeys } from "@/constants";
 import { useDialog } from "@/hooks";
-import { useDeleteUser, useGetUsers } from "@/queries";
+import { useGetBlogs } from "@/queries/ManagementBlog";
 import {
   Pagination,
   Select,
@@ -16,66 +16,34 @@ import {
   TableRow,
 } from "@heroui/react";
 import { allColumnsForTable, renderCell } from "./allColumns";
-import { UpdateUserForm } from "./UpdateUserForm";
 
-export const ManagementUser = () => {
+export const ManagementBlog = () => {
   const { showDialog, hideDialog } = useDialog();
   const {
-    users,
-    totalPagesUsers,
-    usersParams,
-    setUsersParams,
-    handleInvalidateUsers,
-  } = useGetUsers();
-
-  const { onDeleteUser } = useDeleteUser({
-    onSuccess: () => {
-      hideDialog();
-      handleInvalidateUsers();
-    },
-  });
+    blogs,
+    totalPagesBlogs,
+    blogsParams,
+    setBlogsParams,
+    handleInvalidateBlogs,
+  } = useGetBlogs();
 
   const handlePageSizeChange = (keys: SharedSelection) => {
     const pageSize = Number(Array.from(keys)[0]);
-    setUsersParams((prev) => ({
+    setBlogsParams((prev) => ({
       ...prev,
       pageSize,
     }));
   };
 
   const handlePageNoChange = (pageNo: number) => {
-    setUsersParams((prev) => ({
+    setBlogsParams((prev) => ({
       ...prev,
       pageNo: pageNo - 1,
     }));
   };
 
-  const handleUpdateUser = (id: number) => {
-    showDialog({
-      title: "Update User",
-      content: <UpdateUserForm id={id} />,
-      options: {
-        hideActions: true,
-      },
-    });
-  };
-
-  const handleDeleteUser = (id: number) => {
-    showDialog({
-      title: "Delete User",
-      content: "Are you sure you want to delete this user?",
-      options: {
-        onOk: () => {
-          onDeleteUser({
-            [ManagementUserKeys.ID]: id,
-          });
-        },
-        onCancel: () => {
-          hideDialog();
-        },
-      },
-    });
-  };
+  const handleUpdateBlog = (id: number) => {};
+  const handleDeleteBlog = (id: number) => {};
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
@@ -93,24 +61,24 @@ export const ManagementUser = () => {
             <TableColumn
               key={column.key}
               align={
-                column.key === ManagementUserKeys.ACTIONS ? "center" : "start"
+                column.key === ManagementBlogKeys.ACTIONS ? "center" : "start"
               }
-              width={column.key === ManagementUserKeys.ACTIONS ? 80 : undefined}
+              width={column.key === ManagementBlogKeys.ACTIONS ? 80 : undefined}
             >
               {column.label}
             </TableColumn>
           )}
         </TableHeader>
         <TableBody emptyContent="No users found">
-          {users.map((user) => (
-            <TableRow key={user[ManagementUserKeys.ID]}>
+          {blogs.map((blog) => (
+            <TableRow key={blog[ManagementBlogKeys.ID]}>
               {(columnKey) => (
                 <TableCell className="overflow-hidden text-ellipsis text-nowrap">
                   {renderCell(
-                    user,
+                    blog,
                     columnKey,
-                    handleUpdateUser,
-                    handleDeleteUser,
+                    handleUpdateBlog,
+                    handleDeleteBlog,
                   )}
                 </TableCell>
               )}
@@ -124,7 +92,7 @@ export const ManagementUser = () => {
           variant="bordered"
           className="w-24"
           disallowEmptySelection
-          defaultSelectedKeys={[usersParams?.pageSize?.toString() ?? "10"]}
+          defaultSelectedKeys={[blogsParams?.pageSize?.toString() ?? "10"]}
           onSelectionChange={handlePageSizeChange}
         >
           <SelectItem key={"10"}>10</SelectItem>
@@ -134,8 +102,8 @@ export const ManagementUser = () => {
         <Pagination
           aria-label="page-no"
           showControls
-          initialPage={usersParams?.pageNo}
-          total={totalPagesUsers}
+          initialPage={blogsParams?.pageNo}
+          total={totalPagesBlogs}
           onChange={handlePageNoChange}
         />
       </div>

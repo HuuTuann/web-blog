@@ -24,7 +24,7 @@ export const SideBar = ({ sideBarOptions }: Props) => {
         <Image src="/logo.svg" alt="Best CV" className="h-16" />
       </div>
       <div className="flex flex-1 flex-col gap-1">
-        {sideBarOptions.map((option) => {
+        {sideBarOptions.map((option: SideBarOptions) => {
           const { path, label, icon } = option;
 
           return (
@@ -36,6 +36,7 @@ export const SideBar = ({ sideBarOptions }: Props) => {
                 path === pathname && "bg-slate-200",
               )}
               startContent={icon}
+              onPress={() => router.push(path)}
             >
               {label}
             </Button>

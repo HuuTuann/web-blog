@@ -14,6 +14,11 @@ export default function MainLayout({
       label: "Management User",
       icon: <UserRoundCog />,
     },
+    {
+      path: Paths.MANAGEMENT_BLOG,
+      label: "Management Blog",
+      icon: <UserRoundCog />,
+    },
   ] as const;
 
   return (
