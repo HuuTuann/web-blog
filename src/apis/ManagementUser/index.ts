@@ -1,3 +1,4 @@
+import { ManagementUserKeys } from "@/constants";
 import { stringifyParams } from "@/lib";
 import { httpService } from "@/services";
 import {
@@ -12,13 +13,14 @@ export const getUsers = async (params: ParamsType) => {
 };
 
 export const getUserDetail = async (params: GetUserDetailParams) => {
-  return httpService.get(`/api/users/${params.user_id}`);
+  return httpService.get(`/api/users/${params?.[ManagementUserKeys.ID]}`);
 };
 
 export const updateUser = async (payload: UpdateUserPayload) => {
+  console.log("🚀 ~ updateUser ~ payload:", payload);
   return httpService.put(`/api/users`, payload);
 };
 
 export const deleteUser = async (payload: DeleteUserPayload) => {
-  return httpService.delete(`/api/users/${payload.user_id}`);
+  return httpService.delete(`/api/users/${payload?.[ManagementUserKeys.ID]}`);
 };

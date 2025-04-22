@@ -12,7 +12,8 @@ export interface ListUsersResponse {
   [ManagementUserKeys.MODIFIED_BY]: string;
   [ManagementUserKeys.ROLE]: string;
   [ManagementUserKeys.AVATAR]: string;
-  [ManagementUserKeys.ID]: string;
+  [ManagementUserKeys.ID]: number;
+  [ManagementUserKeys.PASSWORD]: string;
 }
 
 export interface UseGetUserParams {
@@ -25,15 +26,16 @@ export interface UseGetUserParams {
 }
 
 export interface UpdateUserPayload {
-  [ManagementUserKeys.ID]: string;
+  [ManagementUserKeys.ID]: number;
   [ManagementUserKeys.FULL_NAME]: string;
+  [ManagementUserKeys.PASSWORD]: string;
   [ManagementUserKeys.AVATAR]?: string;
 }
 
 export type UserDetailResponse = ListUsersResponse;
 
 export interface GetUserDetailParams {
-  [ManagementUserKeys.ID]: string;
+  [ManagementUserKeys.ID]: number;
 }
 
 export interface UseGetUserDetailParams {
@@ -46,5 +48,5 @@ export interface UseGetUserDetailParams {
 }
 
 export interface DeleteUserPayload {
-  [ManagementUserKeys.ID]: string;
+  [ManagementUserKeys.ID]: number;
 }

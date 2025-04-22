@@ -3,16 +3,18 @@
 import { Icons } from "@/assets";
 import { Button } from "@/components";
 import { ManagementUserKeys } from "@/constants";
+import { useDialog } from "@/hooks";
 import { uploadImageToCloudinary } from "@/services";
 import { Form, Image, Input } from "@heroui/react";
 import { Controller, useWatch } from "react-hook-form";
 import { useUpdateUserForm } from "./useUpdateUserForm";
 
 type Props = {
-  id: string;
+  id: number;
 };
 
 export const UpdateUserForm = ({ id }: Props) => {
+  const { hideDialog } = useDialog();
   const { control, onSubmit, setValue } = useUpdateUserForm({
     id,
   });
@@ -89,7 +91,9 @@ export const UpdateUserForm = ({ id }: Props) => {
         />
       )}
       <div className="flex w-full items-center justify-end gap-2">
-        <Button variant="ioLight">Cancel</Button>
+        <Button variant="ioLight" onPress={hideDialog}>
+          Cancel
+        </Button>
         <Button type="submit" variant="ioSolid">
           Save
         </Button>

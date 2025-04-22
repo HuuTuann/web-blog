@@ -34,8 +34,8 @@ export const allColumnsForTable = [
 export const renderCell = (
   managementUser: ListUsersResponse,
   columnKey: React.Key,
-  handleUpdateUser: (id: string) => void,
-  handleDeleteUser: (id: string) => void,
+  handleUpdateUser: (id: number) => void,
+  handleDeleteUser: (id: number) => void,
 ) => {
   const cellValue = managementUser[columnKey as keyof ListUsersResponse];
 

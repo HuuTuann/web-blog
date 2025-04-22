@@ -20,11 +20,18 @@ import { UpdateUserForm } from "./UpdateUserForm";
 
 export const ManagementUser = () => {
   const { showDialog, hideDialog } = useDialog();
-  const { users, totalPagesUsers, usersParams, setUsersParams } = useGetUsers();
+  const {
+    users,
+    totalPagesUsers,
+    usersParams,
+    setUsersParams,
+    handleInvalidateUsers,
+  } = useGetUsers();
 
   const { onDeleteUser } = useDeleteUser({
     onSuccess: () => {
       hideDialog();
+      handleInvalidateUsers();
     },
   });
 
@@ -43,7 +50,7 @@ export const ManagementUser = () => {
     }));
   };
 
-  const handleUpdateUser = (id: string) => {
+  const handleUpdateUser = (id: number) => {
     showDialog({
       title: "Update User",
       content: <UpdateUserForm id={id} />,
@@ -53,14 +60,14 @@ export const ManagementUser = () => {
     });
   };
 
-  const handleDeleteUser = (id: string) => {
+  const handleDeleteUser = (id: number) => {
     showDialog({
       title: "Delete User",
       content: "Are you sure you want to delete this user?",
       options: {
         onOk: () => {
           onDeleteUser({
-            user_id: id,
+            [ManagementUserKeys.ID]: id,
           });
         },
         onCancel: () => {

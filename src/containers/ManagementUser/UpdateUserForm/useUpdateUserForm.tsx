@@ -1,17 +1,21 @@
-import { useGetUserDetail, useUpdateUser } from "@/queries";
+import { ManagementUserKeys } from "@/constants";
+import { useDialog } from "@/hooks";
+import { useGetUserDetail, useGetUsers, useUpdateUser } from "@/queries";
 import { UpdateUserPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { getInitialValues, initialValues, updateUserSchema } from "./helpers";
 
 type Props = {
-  id: string;
+  id: number;
 };
 
 export const useUpdateUserForm = ({ id }: Props) => {
-  const { userDetail } = useGetUserDetail({
+  const { hideDialog } = useDialog();
+  const { handleInvalidateUsers } = useGetUsers();
+  const { userDetail, handleInvalidateUserDetail } = useGetUserDetail({
     params: {
-      user_id: id,
+      [ManagementUserKeys.ID]: id,
     },
   });
 
@@ -28,13 +32,26 @@ export const useUpdateUserForm = ({ id }: Props) => {
     resolver: zodResolver(updateUserSchema),
   });
 
-  const handleUpdateUser = (values: UpdateUserPayload) => {
-    onUpdateUser(values);
+  const onValid = (values: UpdateUserPayload) => {
+    onUpdateUser(values, {
+      onSuccess: () => {
+        hideDialog();
+        handleInvalidateUsers();
+        handleInvalidateUserDetail();
+      },
+      onError: (error) => {
+        console.error("Error updating user:", error);
+      },
+    });
+  };
+
+  const onInValid = (errors: FieldErrors<UpdateUserPayload>) => {
+    console.log("🚀 ~ inValid ~ errors:", errors);
   };
 
   return {
     ...formReturns,
     isLoadingUpdateUser,
-    onSubmit: handleSubmit(handleUpdateUser),
+    onSubmit: handleSubmit(onValid, onInValid),
   };
 };
