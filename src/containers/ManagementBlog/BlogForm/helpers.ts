@@ -15,16 +15,14 @@ const schema = z.object({
   }),
 });
 
-export const initialValues = {
+const initialValues = {
   [ManagementBlogKeys.ID]: 0,
   [ManagementBlogKeys.TITLE]: "",
   [ManagementBlogKeys.CONTENT]: "",
   [ManagementBlogKeys.IMAGE]: "",
 };
 
-export const getInitialValues = (
-  blog?: BlogDetailResponse,
-): BlogFormPayload => {
+const getInitialValues = (blog?: BlogDetailResponse): BlogFormPayload => {
   return {
     ...initialValues,
     [ManagementBlogKeys.ID]: blog?.[ManagementBlogKeys.ID] ?? 0,

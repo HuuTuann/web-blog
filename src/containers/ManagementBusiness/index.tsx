@@ -1,9 +1,9 @@
 "use client";
 
 import { Button } from "@/components";
-import { ManagementBlogKeys } from "@/constants";
+import { ManagementBusinessKeys } from "@/constants";
 import { useDialog } from "@/hooks";
-import { useDeleteBlog, useGetBlogs } from "@/queries/ManagementBlog";
+import { useDeleteBusiness, useGetBusinesses } from "@/queries";
 import {
   Pagination,
   Select,
@@ -17,30 +17,30 @@ import {
   TableRow,
 } from "@heroui/react";
 import { allColumnsForTable, renderCell } from "./allColumns";
-import { BlogForm } from "./BlogForm";
+import { BusinessForm } from "./BusinessForm";
 
-export const ManagementBlog = () => {
+export const ManagementBusiness = () => {
   const { showDialog, hideDialog } = useDialog();
   const {
-    blogs,
-    totalPagesBlogs,
-    blogsParams,
-    setBlogsParams,
-    handleInvalidateBlogs,
-  } = useGetBlogs();
+    businesses,
+    totalPagesBusinesses,
+    businessesParams,
+    setBusinessesParams,
+    handleInvalidateBusinesses,
+  } = useGetBusinesses();
 
-  const { onDeleteBlog } = useDeleteBlog();
+  const { onDeleteBusiness } = useDeleteBusiness();
 
   const handlePageSizeChange = (keys: SharedSelection) => {
     const pageSize = Number(Array.from(keys)[0]);
-    setBlogsParams((prev) => ({
+    setBusinessesParams((prev) => ({
       ...prev,
       pageSize,
     }));
   };
 
   const handlePageNoChange = (pageNo: number) => {
-    setBlogsParams((prev) => ({
+    setBusinessesParams((prev) => ({
       ...prev,
       pageNo: pageNo - 1,
     }));
@@ -48,36 +48,38 @@ export const ManagementBlog = () => {
 
   const handleCreateBlog = () => {
     showDialog({
-      title: "Create Blog",
-      content: <BlogForm />,
+      title: "Create Business",
+      content: <BusinessForm />,
       options: {
+        size: "5xl",
         hideActions: true,
       },
     });
   };
 
-  const handleUpdateBlog = (id: number) => {
+  const handleUpdateBusiness = (id: number) => {
     showDialog({
-      title: "Update Blog",
-      content: <BlogForm id={id} />,
+      title: "Update Business",
+      content: <BusinessForm id={id} />,
       options: {
+        size: "5xl",
         hideActions: true,
       },
     });
   };
 
-  const handleDeleteBlog = (id: number) => {
+  const handleDeleteBusiness = (id: number) => {
     showDialog({
-      title: "Delete Blog",
-      content: "Are you sure you want to delete this blog?",
+      title: "Delete Business",
+      content: `Are you sure you want to delete this business?`,
       options: {
         onOk: () => {
-          onDeleteBlog(
-            { [ManagementBlogKeys.ID]: id },
+          onDeleteBusiness(
+            { [ManagementBusinessKeys.ID]: id },
             {
               onSuccess: () => {
                 hideDialog();
-                handleInvalidateBlogs();
+                handleInvalidateBusinesses();
               },
               onError: (error) => {
                 console.error("Error deleting blog:", error);
@@ -110,24 +112,28 @@ export const ManagementBlog = () => {
             <TableColumn
               key={column.key}
               align={
-                column.key === ManagementBlogKeys.ACTIONS ? "center" : "start"
+                column.key === ManagementBusinessKeys.ACTIONS
+                  ? "center"
+                  : "start"
               }
-              width={column.key === ManagementBlogKeys.ACTIONS ? 80 : undefined}
+              width={
+                column.key === ManagementBusinessKeys.ACTIONS ? 80 : undefined
+              }
             >
               {column.label}
             </TableColumn>
           )}
         </TableHeader>
         <TableBody emptyContent="No users found">
-          {blogs.map((blog) => (
-            <TableRow key={blog[ManagementBlogKeys.ID]}>
+          {businesses.map((business) => (
+            <TableRow key={business[ManagementBusinessKeys.ID]}>
               {(columnKey) => (
                 <TableCell className="overflow-hidden text-ellipsis text-nowrap">
                   {renderCell(
-                    blog,
+                    business,
                     columnKey,
-                    handleUpdateBlog,
-                    handleDeleteBlog,
+                    handleUpdateBusiness,
+                    handleDeleteBusiness,
                   )}
                 </TableCell>
               )}
@@ -141,7 +147,7 @@ export const ManagementBlog = () => {
           variant="bordered"
           className="w-24"
           disallowEmptySelection
-          defaultSelectedKeys={[blogsParams?.pageSize?.toString() ?? "10"]}
+          defaultSelectedKeys={[businessesParams?.pageSize?.toString() ?? "10"]}
           onSelectionChange={handlePageSizeChange}
         >
           <SelectItem key={"10"}>10</SelectItem>
@@ -151,8 +157,8 @@ export const ManagementBlog = () => {
         <Pagination
           aria-label="page-no"
           showControls
-          initialPage={blogsParams?.pageNo}
-          total={totalPagesBlogs}
+          initialPage={businessesParams?.pageNo}
+          total={totalPagesBusinesses}
           onChange={handlePageNoChange}
         />
       </div>
