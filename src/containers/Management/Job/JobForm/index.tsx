@@ -1,7 +1,19 @@
 import { Button } from "@/components";
 import { ManagementJobKeys } from "@/constants";
 import { useDialog } from "@/hooks";
-import { Form, Input, Select, SelectItem, Textarea } from "@heroui/react";
+import {
+  DatePicker,
+  Form,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+} from "@heroui/react";
+import {
+  CalendarDate,
+  parseDate,
+  toCalendarDate,
+} from "@internationalized/date";
 import { Controller } from "react-hook-form";
 import { JobHelpers } from "./helpers";
 import { useJobForm } from "./useJobForm";
@@ -12,6 +24,8 @@ type Props = {
 
 export const JobForm = ({ id }: Props) => {
   const { hideDialog } = useDialog();
+
+  // const [value, setValue] = useState<DateValue | null>(parseDate("2024-04-04"));
 
   const { control, onSubmit } = useJobForm({
     ...(id ? { id } : {}),
@@ -131,17 +145,20 @@ export const JobForm = ({ id }: Props) => {
         name={ManagementJobKeys.DEADLINE}
         control={control}
         render={({
-          field,
+          field: { value, onChange, ...restField },
           fieldState: { invalid, error: { message } = { message: "" } },
         }) => (
-          <Input
+          <DatePicker
             label="Deadline"
             labelPlacement="outside"
-            placeholder="Enter your deadline"
             variant="bordered"
             isInvalid={invalid}
             errorMessage={message}
-            {...field}
+            value={value ? toCalendarDate(parseDate(value)) : null}
+            onChange={(date: CalendarDate | null) =>
+              date && onChange(date.toString())
+            }
+            {...restField}
           />
         )}
       />

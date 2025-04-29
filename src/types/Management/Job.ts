@@ -41,8 +41,8 @@ export interface JobFormPayload {
   [ManagementJobKeys.CONTRACT]: string;
   [ManagementJobKeys.BENEFIT]: string;
   [ManagementJobKeys.QUANTITY_OPENING]: string;
-  [ManagementJobKeys.IS_OPENING]: string;
-  [ManagementJobKeys.IS_APPROVE]: string;
+  [ManagementJobKeys.IS_OPENING]: boolean;
+  [ManagementJobKeys.IS_APPROVE]: boolean;
 }
 
 export interface JobDetailResponse {

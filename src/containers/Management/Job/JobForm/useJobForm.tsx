@@ -1,5 +1,6 @@
-import { ManagementJobKeys } from "@/constants";
+import { JobOpeningApprove, ManagementJobKeys } from "@/constants";
 import { useDialog } from "@/hooks";
+import { formatDate } from "@/lib";
 import {
   useCreateJob,
   useGetJobDetail,
@@ -9,7 +10,7 @@ import {
 import { JobFormPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, useForm } from "react-hook-form";
-import { JobHelpers } from "./helpers";
+import { JobFormSchema, JobHelpers } from "./helpers";
 
 type Props = {
   id?: number;
@@ -27,7 +28,7 @@ export const useJobForm = ({ id }: Props) => {
   const { isLoadingCreateJob, onCreateJob } = useCreateJob();
   const { isLoadingUpdateJob, onUpdateJob } = useUpdateJob();
 
-  const { handleSubmit, ...formReturns } = useForm<JobFormPayload>({
+  const { handleSubmit, ...formReturns } = useForm<JobFormSchema>({
     defaultValues: JobHelpers.initialValues,
     values: formValues,
     mode: "onChange",
@@ -36,10 +37,18 @@ export const useJobForm = ({ id }: Props) => {
     resolver: zodResolver(JobHelpers.schema),
   });
 
-  const onValid = (values: JobFormPayload) => {
-    console.log("Form values:", values);
+  const onValid = (values: JobFormSchema) => {
+    const { isOpening, isApprove, deadline } = values;
+
+    const payload = {
+      ...values,
+      [ManagementJobKeys.IS_OPENING]: isOpening === JobOpeningApprove.ENABLE,
+      [ManagementJobKeys.IS_APPROVE]: isApprove === JobOpeningApprove.ENABLE,
+      [ManagementJobKeys.DEADLINE]: formatDate(deadline),
+    };
+
     if (id) {
-      onUpdateJob(values, {
+      onUpdateJob(payload, {
         onSuccess: () => {
           hideDialog();
           handleInvalidateJobs();
@@ -50,7 +59,7 @@ export const useJobForm = ({ id }: Props) => {
         },
       });
     } else {
-      onCreateJob(values, {
+      onCreateJob(payload, {
         onSuccess: () => {
           hideDialog();
           handleInvalidateJobs();

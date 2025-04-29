@@ -1,5 +1,5 @@
 import { JobOpeningApprove, ManagementJobKeys } from "@/constants";
-import { JobDetailResponse, JobFormPayload } from "@/types";
+import { JobDetailResponse } from "@/types";
 import { z } from "zod";
 
 const schema = z.object({
@@ -51,7 +51,7 @@ const schema = z.object({
   }),
 });
 
-const initialValues: JobFormPayload = {
+const initialValues: JobFormSchema = {
   [ManagementJobKeys.ID]: 0,
   [ManagementJobKeys.TITLE]: "",
   [ManagementJobKeys.YEAR_EXP]: "",
@@ -70,8 +70,13 @@ const initialValues: JobFormPayload = {
   [ManagementJobKeys.IS_APPROVE]: "",
 };
 
-const getInitialValues = (job?: JobDetailResponse) => {
-  const { quantityOpening, isOpening, isApprove } = job || {};
+const parseDate = (date: string) => {
+  const [day, month, year] = date.split("/");
+  return `${year}-${month}-${day}`;
+};
+
+const getInitialValues = (job?: JobDetailResponse): JobFormSchema => {
+  const { quantityOpening, isOpening, isApprove, deadline } = job || {};
 
   return {
     ...initialValues,
@@ -83,6 +88,7 @@ const getInitialValues = (job?: JobDetailResponse) => {
     [ManagementJobKeys.IS_APPROVE]: isApprove
       ? JobOpeningApprove.ENABLE
       : JobOpeningApprove.DISABLE,
+    [ManagementJobKeys.DEADLINE]: deadline ? parseDate(deadline) : "",
   };
 };
 
@@ -97,3 +103,5 @@ export const JobHelpers = {
   openingApproveOptions,
   getInitialValues,
 };
+
+export type JobFormSchema = z.infer<typeof schema>;
