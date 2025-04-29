@@ -45,6 +45,4 @@ export interface UseGetBlogDetailParams {
   >;
 }
 
-export interface DeleteBlogPayload {
-  [ManagementBlogKeys.ID]: number;
-}
+export type DeleteBlogPayload = GetBlogDetailParams;

@@ -47,6 +47,4 @@ export interface UseGetUserDetailParams {
   >;
 }
 
-export interface DeleteUserPayload {
-  [ManagementUserKeys.ID]: number;
-}
+export type DeleteUserPayload = GetUserDetailParams;

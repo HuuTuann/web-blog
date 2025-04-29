@@ -70,6 +70,4 @@ export interface UseGetBusinessDetailParams {
   >;
 }
 
-export interface DeleteBusinessPayload {
-  [ManagementBusinessKeys.ID]: number;
-}
+export type DeleteBusinessPayload = GetBusinessDetailParams;

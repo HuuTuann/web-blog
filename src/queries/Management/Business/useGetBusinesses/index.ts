@@ -21,7 +21,7 @@ export const useGetBusinesses = ({
     Error,
     PageResponseType<ListBusinessResponse>
   >({
-    queryKey: [QueryKey.GET_BUSINESS, params],
+    queryKey: [QueryKey.GET_BUSINESSES, params],
     queryFn: ({ queryKey }) => {
       const [, queryParams] = queryKey;
       return getBusiness(queryParams as TableParams);
@@ -32,7 +32,7 @@ export const useGetBusinesses = ({
   const queryClient = useQueryClient();
   const handleInvalidateBusinesses = () => {
     queryClient.invalidateQueries({
-      queryKey: [QueryKey.GET_BUSINESS, params],
+      queryKey: [QueryKey.GET_BUSINESSES, params],
     });
   };
 
