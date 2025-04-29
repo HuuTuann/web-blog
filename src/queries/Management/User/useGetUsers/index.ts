@@ -2,11 +2,11 @@ import { getUsers } from "@/apis";
 import { QueryKey } from "@/constants";
 import {
   initialPageParam,
+  ListUsersResponse,
   PageResponseType,
   TableParams,
   UseGetUserParams,
 } from "@/types";
-import { ListUsersResponse } from "@/types/ManagementUser";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 

@@ -1,6 +1,6 @@
 import { ManagementBlogKeys } from "@/constants";
 import { formatDate } from "@/lib";
-import { ListBlogsResponse } from "@/types/ManagementBlog";
+import { ListBlogsResponse } from "@/types";
 import { Button } from "@heroui/react";
 import { UserPen, UserRoundX } from "lucide-react";
 

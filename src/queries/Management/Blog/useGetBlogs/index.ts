@@ -1,7 +1,12 @@
 import { getBlogs } from "@/apis";
 import { QueryKey } from "@/constants";
-import { initialPageParam, PageResponseType, TableParams } from "@/types";
-import { ListBlogsResponse, UseGetBlogParams } from "@/types/ManagementBlog";
+import {
+  initialPageParam,
+  ListBlogsResponse,
+  PageResponseType,
+  TableParams,
+  UseGetBlogParams,
+} from "@/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 

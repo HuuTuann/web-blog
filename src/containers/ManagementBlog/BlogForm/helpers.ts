@@ -1,5 +1,5 @@
 import { ManagementBlogKeys } from "@/constants";
-import { BlogDetailResponse, BlogFormPayload } from "@/types/ManagementBlog";
+import { BlogDetailResponse, BlogFormPayload } from "@/types";
 import { z } from "zod";
 
 const schema = z.object({

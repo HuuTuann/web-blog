@@ -1,11 +1,11 @@
 import { getBlogDetail } from "@/apis";
 import { QueryKey } from "@/constants";
-import { ResponseType } from "@/types";
 import {
   BlogDetailResponse,
   GetBlogDetailParams,
+  ResponseType,
   UseGetBlogDetailParams,
-} from "@/types/ManagementBlog";
+} from "@/types";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetBlogDetail = ({

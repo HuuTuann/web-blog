@@ -1,7 +1,11 @@
 import { ManagementBlogKeys } from "@/constants";
 import { useDialog } from "@/hooks";
-import { useCreateBlog, useGetBlogDetail, useGetBlogs } from "@/queries";
-import { useUpdateBlog } from "@/queries/ManagementBlog/useUpdateBlog";
+import {
+  useCreateBlog,
+  useGetBlogDetail,
+  useGetBlogs,
+  useUpdateBlog,
+} from "@/queries";
 import { BlogFormPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldErrors, useForm } from "react-hook-form";

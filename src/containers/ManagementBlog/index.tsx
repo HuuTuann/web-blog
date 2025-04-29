@@ -3,7 +3,7 @@
 import { Button } from "@/components";
 import { ManagementBlogKeys } from "@/constants";
 import { useDialog } from "@/hooks";
-import { useDeleteBlog, useGetBlogs } from "@/queries/ManagementBlog";
+import { useDeleteBlog, useGetBlogs } from "@/queries";
 import {
   Pagination,
   Select,

@@ -1,5 +1,5 @@
 import { updateBlog } from "@/apis";
-import { BlogFormPayload } from "@/types/ManagementBlog";
+import { BlogFormPayload } from "@/types";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
 export const useUpdateBlog = (

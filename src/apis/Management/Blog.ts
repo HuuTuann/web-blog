@@ -1,12 +1,12 @@
 import { ManagementBlogKeys } from "@/constants";
 import { stringifyParams } from "@/lib";
 import { httpService } from "@/services";
-import { ParamsType } from "@/types";
 import {
   BlogFormPayload,
   DeleteBlogPayload,
   GetBlogDetailParams,
-} from "@/types/ManagementBlog";
+  ParamsType,
+} from "@/types";
 
 export const getBlogs = async (params: ParamsType) => {
   return httpService.get(`/api/blog/list-blog?${stringifyParams(params)}`);
