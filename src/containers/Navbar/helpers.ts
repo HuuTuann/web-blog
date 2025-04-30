@@ -5,4 +5,6 @@ export const headerTitleMap = {
   [Paths.MANAGEMENT_BLOG]: "Management Blog",
   [Paths.MANAGEMENT_BUSINESS]: "Management Business",
   [Paths.MANAGEMENT_JOB]: "Management Job",
+
+  [Paths.USER]: "BestCV",
 } as const;

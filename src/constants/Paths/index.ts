@@ -1,5 +1,6 @@
 export enum RootPaths {
   MANAGEMENT = "/management",
+  USER = "/user",
 }
 
 export enum Paths {
@@ -7,4 +8,6 @@ export enum Paths {
   MANAGEMENT_BLOG = `${RootPaths.MANAGEMENT}/blog`,
   MANAGEMENT_BUSINESS = `${RootPaths.MANAGEMENT}/business`,
   MANAGEMENT_JOB = `${RootPaths.MANAGEMENT}/job`,
+
+  USER = `${RootPaths.USER}`,
 }
