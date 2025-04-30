@@ -14,7 +14,10 @@ export const useGetJobs = ({
   defaultParams = initialPageParam,
   options,
 }: UseGetJobParams = {}) => {
-  const [params, setParams] = useState<TableParams>(defaultParams);
+  const [params, setParams] = useState<TableParams>({
+    ...defaultParams,
+    isApprove: "true",
+  });
 
   const { data, isLoading } = useQuery<
     PageResponseType<GetJobResponse>,

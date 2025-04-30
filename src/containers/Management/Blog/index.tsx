@@ -2,7 +2,7 @@
 
 import { Button } from "@/components";
 import { ManagementBlogKeys } from "@/constants";
-import { useDialog } from "@/hooks";
+import { Toast, useDialog } from "@/hooks";
 import { useDeleteBlog, useGetBlogs } from "@/queries";
 import {
   Pagination,
@@ -42,7 +42,7 @@ export const ManagementBlog = () => {
   const handlePageNoChange = (pageNo: number) => {
     setBlogsParams((prev) => ({
       ...prev,
-      pageNo: pageNo - 1,
+      pageNo,
     }));
   };
 
@@ -78,6 +78,7 @@ export const ManagementBlog = () => {
               onSuccess: () => {
                 hideDialog();
                 handleInvalidateBlogs();
+                Toast.Success("Blog deleted successfully");
               },
               onError: (error) => {
                 console.error("Error deleting blog:", error);
@@ -101,7 +102,7 @@ export const ManagementBlog = () => {
         isHeaderSticky
         isVirtualized
         classNames={{
-          base: "h-[calc(100%-56px)]",
+          base: "h-[calc(100%-112px)]",
           wrapper: "!h-full",
         }}
       >
@@ -149,6 +150,7 @@ export const ManagementBlog = () => {
           <SelectItem key={"15"}>15</SelectItem>
         </Select>
         <Pagination
+          key={`pagination-${totalPagesBlogs}-${blogsParams?.pageNo}`}
           aria-label="page-no"
           showControls
           initialPage={blogsParams?.pageNo}

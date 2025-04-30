@@ -25,8 +25,6 @@ type Props = {
 export const JobForm = ({ id }: Props) => {
   const { hideDialog } = useDialog();
 
-  // const [value, setValue] = useState<DateValue | null>(parseDate("2024-04-04"));
-
   const { control, onSubmit } = useJobForm({
     ...(id ? { id } : {}),
   });
@@ -308,9 +306,9 @@ export const JobForm = ({ id }: Props) => {
           fieldState: { invalid, error: { message } = { message: "" } },
         }) => (
           <Textarea
-            label="Benefits"
+            label="Description"
             labelPlacement="outside"
-            placeholder="Enter your benefits"
+            placeholder="Enter your description"
             variant="bordered"
             isInvalid={invalid}
             errorMessage={message}

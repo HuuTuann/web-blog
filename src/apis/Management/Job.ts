@@ -2,6 +2,7 @@ import { ManagementJobKeys } from "@/constants";
 import { stringifyParams } from "@/lib";
 import { httpService } from "@/services";
 import {
+  ApproveJobPayload,
   DeleteJobPayload,
   GetJobDetailParams,
   JobFormPayload,
@@ -26,4 +27,8 @@ export const updateJob = async (payload: JobFormPayload) => {
 
 export const deleteJob = async (payload: DeleteJobPayload) => {
   return httpService.delete(`/api/job/${payload?.[ManagementJobKeys.ID]}`);
+};
+
+export const approveJob = async (payload: ApproveJobPayload) => {
+  return httpService.put(`/api/job/approve/${payload?.[ManagementJobKeys.ID]}`);
 };

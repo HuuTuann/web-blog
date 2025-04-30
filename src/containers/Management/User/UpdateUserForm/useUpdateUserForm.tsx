@@ -1,5 +1,5 @@
 import { ManagementUserKeys } from "@/constants";
-import { useDialog } from "@/hooks";
+import { Toast, useDialog } from "@/hooks";
 import { useGetUserDetail, useGetUsers, useUpdateUser } from "@/queries";
 import { UpdateUserPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -38,6 +38,7 @@ export const useUpdateUserForm = ({ id }: Props) => {
         hideDialog();
         handleInvalidateUsers();
         handleInvalidateUserDetail();
+        Toast.Success("User updated successfully");
       },
       onError: (error) => {
         console.error("Error updating user:", error);

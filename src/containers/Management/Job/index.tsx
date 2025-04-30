@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@/components";
 import { ManagementJobKeys } from "@/constants";
-import { useDialog } from "@/hooks";
-import { useDeleteJob, useGetJobs } from "@/queries";
+import { Toast, useDialog } from "@/hooks";
+import { useApproveJob, useDeleteJob, useGetJobs } from "@/queries";
 import {
+  Checkbox,
   Pagination,
   Select,
   SelectItem,
@@ -17,7 +17,6 @@ import {
   TableRow,
 } from "@heroui/react";
 import { allColumnsForTable, renderCell } from "./allColumns";
-import { JobForm } from "./JobForm";
 
 export const ManagementJob = () => {
   const { showDialog, hideDialog } = useDialog();
@@ -30,6 +29,7 @@ export const ManagementJob = () => {
   } = useGetJobs();
 
   const { onDeleteJob } = useDeleteJob();
+  const { onApproveJob } = useApproveJob();
 
   const handlePageSizeChange = (keys: SharedSelection) => {
     const pageSize = Number(Array.from(keys)[0]);
@@ -42,36 +42,21 @@ export const ManagementJob = () => {
   const handlePageNoChange = (pageNo: number) => {
     setJobsParams((prev) => ({
       ...prev,
-      pageNo: pageNo - 1,
+      pageNo,
     }));
   };
 
-  const handleCreateBlog = () => {
-    showDialog({
-      title: "Create Business",
-      content: <JobForm />,
-      options: {
-        size: "5xl",
-        hideActions: true,
-      },
-    });
+  const handleApproveChange = (isApprove: boolean) => {
+    setJobsParams((prev) => ({
+      ...prev,
+      isApprove: String(isApprove),
+    }));
   };
 
-  const handleUpdateBusiness = (id: number) => {
+  const handleDeleteJob = (id: number) => {
     showDialog({
-      title: "Update Business",
-      content: <JobForm id={id} />,
-      options: {
-        size: "5xl",
-        hideActions: true,
-      },
-    });
-  };
-
-  const handleDeleteBusiness = (id: number) => {
-    showDialog({
-      title: "Delete Business",
-      content: `Are you sure you want to delete this business?`,
+      title: "Delete Job",
+      content: `Are you sure you want to delete this job?`,
       options: {
         onOk: () => {
           onDeleteJob(
@@ -80,6 +65,7 @@ export const ManagementJob = () => {
               onSuccess: () => {
                 hideDialog();
                 handleInvalidateJobs();
+                Toast.Success("Job deleted successfully");
               },
               onError: (error) => {
                 console.error("Error deleting blog:", error);
@@ -91,19 +77,46 @@ export const ManagementJob = () => {
     });
   };
 
+  const handleApproveJob = (id: number) => {
+    showDialog({
+      title: "Approve Business",
+      content: "Are you sure you want to approve this business?",
+      options: {
+        onOk: () => {
+          onApproveJob(
+            { [ManagementJobKeys.ID]: id },
+            {
+              onSuccess: () => {
+                hideDialog();
+                handleInvalidateJobs();
+                Toast.Success("Job approved successfully");
+              },
+              onError: (error) => {
+                console.error("Error approving business:", error);
+              },
+            },
+          );
+        },
+      },
+    });
+  };
+
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <div className="flex w-full justify-end">
-        <Button variant="ioBordered" onPress={handleCreateBlog}>
-          Create
-        </Button>
+        <Checkbox
+          isSelected={jobsParams.isApprove === "true"}
+          onValueChange={handleApproveChange}
+        >
+          Approve
+        </Checkbox>
       </div>
       <Table
         aria-label="Example table with dynamic content"
         isHeaderSticky
         isVirtualized
         classNames={{
-          base: "h-[calc(100%-56px)]",
+          base: "h-[calc(100%-96px)]",
           wrapper: "!h-full",
         }}
       >
@@ -128,8 +141,8 @@ export const ManagementJob = () => {
                   {renderCell(
                     job,
                     columnKey,
-                    handleUpdateBusiness,
-                    handleDeleteBusiness,
+                    handleApproveJob,
+                    handleDeleteJob,
                   )}
                 </TableCell>
               )}
@@ -151,6 +164,7 @@ export const ManagementJob = () => {
           <SelectItem key={"15"}>15</SelectItem>
         </Select>
         <Pagination
+          key={`pagination-${totalPagesJobs}-${jobsParams?.pageNo}`}
           aria-label="page-no"
           showControls
           initialPage={jobsParams?.pageNo}

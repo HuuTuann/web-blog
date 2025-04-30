@@ -13,6 +13,7 @@ type Props = {
 };
 
 export const BusinessForm = ({ id }: Props) => {
+  const isEdit = !!id;
   const { hideDialog } = useDialog();
 
   const { control, onSubmit, setValue } = useBusinessForm({
@@ -98,82 +99,86 @@ export const BusinessForm = ({ id }: Props) => {
           />
         )}
       />
-      <Controller
-        name={ManagementBusinessKeys.INDUSTRY}
-        control={control}
-        render={({
-          field,
-          fieldState: { invalid, error: { message } = { message: "" } },
-        }) => (
-          <Input
-            isReadOnly={!isEmpty(id)}
-            label="Industry"
-            labelPlacement="outside"
-            placeholder="Enter your industry"
-            variant="bordered"
-            isInvalid={invalid}
-            errorMessage={message}
-            {...field}
+      {!isEdit && (
+        <>
+          <Controller
+            name={ManagementBusinessKeys.INDUSTRY}
+            control={control}
+            render={({
+              field,
+              fieldState: { invalid, error: { message } = { message: "" } },
+            }) => (
+              <Input
+                isReadOnly={!isEmpty(id)}
+                label="Industry"
+                labelPlacement="outside"
+                placeholder="Enter your industry"
+                variant="bordered"
+                isInvalid={invalid}
+                errorMessage={message}
+                {...field}
+              />
+            )}
           />
-        )}
-      />
-      <Controller
-        name={ManagementBusinessKeys.WARD}
-        control={control}
-        render={({
-          field,
-          fieldState: { invalid, error: { message } = { message: "" } },
-        }) => (
-          <Input
-            isReadOnly={!isEmpty(id)}
-            label="Ward"
-            labelPlacement="outside"
-            placeholder="Enter your ward"
-            variant="bordered"
-            isInvalid={invalid}
-            errorMessage={message}
-            {...field}
+          <Controller
+            name={ManagementBusinessKeys.WARD}
+            control={control}
+            render={({
+              field,
+              fieldState: { invalid, error: { message } = { message: "" } },
+            }) => (
+              <Input
+                isReadOnly={!isEmpty(id)}
+                label="Ward"
+                labelPlacement="outside"
+                placeholder="Enter your ward"
+                variant="bordered"
+                isInvalid={invalid}
+                errorMessage={message}
+                {...field}
+              />
+            )}
           />
-        )}
-      />
-      <Controller
-        name={ManagementBusinessKeys.DISTRICT}
-        control={control}
-        render={({
-          field,
-          fieldState: { invalid, error: { message } = { message: "" } },
-        }) => (
-          <Input
-            isReadOnly={!isEmpty(id)}
-            label="District"
-            labelPlacement="outside"
-            placeholder="Enter your district"
-            variant="bordered"
-            isInvalid={invalid}
-            errorMessage={message}
-            {...field}
+          <Controller
+            name={ManagementBusinessKeys.DISTRICT}
+            control={control}
+            render={({
+              field,
+              fieldState: { invalid, error: { message } = { message: "" } },
+            }) => (
+              <Input
+                isReadOnly={!isEmpty(id)}
+                label="District"
+                labelPlacement="outside"
+                placeholder="Enter your district"
+                variant="bordered"
+                isInvalid={invalid}
+                errorMessage={message}
+                {...field}
+              />
+            )}
           />
-        )}
-      />
-      <Controller
-        name={ManagementBusinessKeys.CITY}
-        control={control}
-        render={({
-          field,
-          fieldState: { invalid, error: { message } = { message: "" } },
-        }) => (
-          <Input
-            isReadOnly={!isEmpty(id)}
-            label="City"
-            labelPlacement="outside"
-            placeholder="Enter your city"
-            variant="bordered"
-            isInvalid={invalid}
-            errorMessage={message}
-            {...field}
+          <Controller
+            name={ManagementBusinessKeys.CITY}
+            control={control}
+            render={({
+              field,
+              fieldState: { invalid, error: { message } = { message: "" } },
+            }) => (
+              <Input
+                isReadOnly={!isEmpty(id)}
+                label="City"
+                labelPlacement="outside"
+                placeholder="Enter your city"
+                variant="bordered"
+                isInvalid={invalid}
+                errorMessage={message}
+                {...field}
+              />
+            )}
           />
-        )}
-      />
+        </>
+      )}
       <Controller
         name={ManagementBusinessKeys.WEBSITE}
         control={control}
@@ -210,25 +215,27 @@ export const BusinessForm = ({ id }: Props) => {
           />
         )}
       />
-      <Controller
-        name={ManagementBusinessKeys.BENEFITS}
-        control={control}
-        render={({
-          field,
-          fieldState: { invalid, error: { message } = { message: "" } },
-        }) => (
-          <Textarea
-            label="Benefits"
-            labelPlacement="outside"
-            placeholder="Enter your benefits"
-            variant="bordered"
-            isInvalid={invalid}
-            errorMessage={message}
-            className="col-span-3"
-            {...field}
-          />
-        )}
-      />
+      {!isEdit && (
+        <Controller
+          name={ManagementBusinessKeys.BENEFITS}
+          control={control}
+          render={({
+            field,
+            fieldState: { invalid, error: { message } = { message: "" } },
+          }) => (
+            <Textarea
+              label="Benefits"
+              labelPlacement="outside"
+              placeholder="Enter your benefits"
+              variant="bordered"
+              isInvalid={invalid}
+              errorMessage={message}
+              className="col-span-3"
+              {...field}
+            />
+          )}
+        />
+      )}
       <Controller
         name={ManagementBusinessKeys.DESCRIPTION}
         control={control}

@@ -2,7 +2,7 @@ import { ManagementBusinessKeys } from "@/constants";
 import { formatDate } from "@/lib";
 import { ListBusinessResponse } from "@/types";
 import { Button } from "@heroui/react";
-import { UserPen, UserRoundX } from "lucide-react";
+import { X } from "lucide-react";
 
 export const allColumnsForTable = [
   {
@@ -38,7 +38,6 @@ export const allColumnsForTable = [
 export const renderCell = (
   managementBusiness: ListBusinessResponse,
   columnKey: React.Key,
-  handleUpdateBusiness: (id: number) => void,
   handleDeleteBusiness: (id: number) => void,
 ) => {
   const cellValue = managementBusiness[columnKey as keyof ListBusinessResponse];
@@ -48,7 +47,11 @@ export const renderCell = (
     case ManagementBusinessKeys.SIZE:
     case ManagementBusinessKeys.NATIONALITY:
     case ManagementBusinessKeys.SLOGAN:
-      return cellValue;
+      return (
+        <p className="max-w-60 overflow-hidden text-ellipsis">
+          {cellValue as string}
+        </p>
+      );
 
     case ManagementBusinessKeys.CREATED_BY:
       const createdAt = managementBusiness[ManagementBusinessKeys.CREATED_AT];
@@ -81,25 +84,12 @@ export const renderCell = (
             isIconOnly
             size="sm"
             variant="light"
-            onPress={() => handleUpdateBusiness(id)}
-          >
-            <UserPen className="text-slate-400" size={24} />
-          </Button>
-          <Button
-            isIconOnly
-            size="sm"
-            variant="light"
             color="danger"
             onPress={() => handleDeleteBusiness(id)}
           >
-            <UserRoundX className="text-red-400" size={24} />
+            <X className="text-red-400" size={24} />
           </Button>
         </div>
-      );
-
-    default:
-      return (
-        <p className="overflow-hidden text-ellipsis">{cellValue as string}</p>
       );
   }
 };

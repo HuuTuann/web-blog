@@ -77,3 +77,5 @@ export interface UseGetJobDetailParams {
 }
 
 export type DeleteJobPayload = GetJobDetailParams;
+
+export type ApproveJobPayload = GetJobDetailParams;

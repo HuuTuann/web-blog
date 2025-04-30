@@ -1,8 +1,7 @@
 "use client";
 
-import { Button } from "@/components";
 import { ManagementBusinessKeys } from "@/constants";
-import { useDialog } from "@/hooks";
+import { Toast, useDialog } from "@/hooks";
 import { useDeleteBusiness, useGetBusinesses } from "@/queries";
 import {
   Pagination,
@@ -17,7 +16,6 @@ import {
   TableRow,
 } from "@heroui/react";
 import { allColumnsForTable, renderCell } from "./allColumns";
-import { BusinessForm } from "./BusinessForm";
 
 export const ManagementBusiness = () => {
   const { showDialog, hideDialog } = useDialog();
@@ -42,30 +40,8 @@ export const ManagementBusiness = () => {
   const handlePageNoChange = (pageNo: number) => {
     setBusinessesParams((prev) => ({
       ...prev,
-      pageNo: pageNo - 1,
+      pageNo,
     }));
-  };
-
-  const handleCreateBlog = () => {
-    showDialog({
-      title: "Create Business",
-      content: <BusinessForm />,
-      options: {
-        size: "5xl",
-        hideActions: true,
-      },
-    });
-  };
-
-  const handleUpdateBusiness = (id: number) => {
-    showDialog({
-      title: "Update Business",
-      content: <BusinessForm id={id} />,
-      options: {
-        size: "5xl",
-        hideActions: true,
-      },
-    });
   };
 
   const handleDeleteBusiness = (id: number) => {
@@ -80,6 +56,7 @@ export const ManagementBusiness = () => {
               onSuccess: () => {
                 hideDialog();
                 handleInvalidateBusinesses();
+                Toast.Success("Business deleted successfully");
               },
               onError: (error) => {
                 console.error("Error deleting blog:", error);
@@ -93,11 +70,6 @@ export const ManagementBusiness = () => {
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <div className="flex w-full justify-end">
-        <Button variant="ioBordered" onPress={handleCreateBlog}>
-          Create
-        </Button>
-      </div>
       <Table
         aria-label="Example table with dynamic content"
         isHeaderSticky
@@ -129,12 +101,7 @@ export const ManagementBusiness = () => {
             <TableRow key={business[ManagementBusinessKeys.ID]}>
               {(columnKey) => (
                 <TableCell className="overflow-hidden text-ellipsis text-nowrap">
-                  {renderCell(
-                    business,
-                    columnKey,
-                    handleUpdateBusiness,
-                    handleDeleteBusiness,
-                  )}
+                  {renderCell(business, columnKey, handleDeleteBusiness)}
                 </TableCell>
               )}
             </TableRow>
@@ -155,6 +122,7 @@ export const ManagementBusiness = () => {
           <SelectItem key={"15"}>15</SelectItem>
         </Select>
         <Pagination
+          key={`pagination-${totalPagesBusinesses}-${businessesParams?.pageNo}`}
           aria-label="page-no"
           showControls
           initialPage={businessesParams?.pageNo}

@@ -33,13 +33,13 @@ export interface BusinessFormPayload {
   [ManagementBusinessKeys.SIZE]: string;
   [ManagementBusinessKeys.NATIONALITY]: string;
   [ManagementBusinessKeys.SLOGAN]: string;
-  [ManagementBusinessKeys.BENEFITS]: string;
+  [ManagementBusinessKeys.BENEFITS]?: string;
   [ManagementBusinessKeys.IMAGE]: string;
-  [ManagementBusinessKeys.INDUSTRY]: string;
-  [ManagementBusinessKeys.STREET]: string;
-  [ManagementBusinessKeys.WARD]: string;
-  [ManagementBusinessKeys.DISTRICT]: string;
-  [ManagementBusinessKeys.CITY]: string;
+  [ManagementBusinessKeys.INDUSTRY]?: string;
+  [ManagementBusinessKeys.STREET]?: string;
+  [ManagementBusinessKeys.WARD]?: string;
+  [ManagementBusinessKeys.DISTRICT]?: string;
+  [ManagementBusinessKeys.CITY]?: string;
   [ManagementBusinessKeys.WEBSITE]: string;
   [ManagementBusinessKeys.CONTACT]: string;
 }

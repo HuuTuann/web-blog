@@ -1,7 +1,7 @@
 "use client";
 
 import { ManagementUserKeys } from "@/constants";
-import { useDialog } from "@/hooks";
+import { Toast, useDialog } from "@/hooks";
 import { useDeleteUser, useGetUsers } from "@/queries";
 import {
   Pagination,
@@ -46,7 +46,7 @@ export const ManagementUser = () => {
   const handlePageNoChange = (pageNo: number) => {
     setUsersParams((prev) => ({
       ...prev,
-      pageNo: pageNo - 1,
+      pageNo,
     }));
   };
 
@@ -66,9 +66,18 @@ export const ManagementUser = () => {
       content: "Are you sure you want to delete this user?",
       options: {
         onOk: () => {
-          onDeleteUser({
-            [ManagementUserKeys.ID]: id,
-          });
+          onDeleteUser(
+            {
+              [ManagementUserKeys.ID]: id,
+            },
+            {
+              onSuccess: () => {
+                hideDialog();
+                handleInvalidateUsers();
+                Toast.Success("User deleted successfully");
+              },
+            },
+          );
         },
         onCancel: () => {
           hideDialog();
@@ -132,6 +141,7 @@ export const ManagementUser = () => {
           <SelectItem key={"15"}>15</SelectItem>
         </Select>
         <Pagination
+          key={`pagination-${totalPagesUsers}-${usersParams?.pageNo}`}
           aria-label="page-no"
           showControls
           initialPage={usersParams?.pageNo}

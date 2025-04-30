@@ -1,6 +1,7 @@
-import { Button } from "@/components";
 import { ManagementJobKeys } from "@/constants";
 import { GetJobResponse } from "@/types";
+import { Button, Chip } from "@heroui/react";
+import { Check, X } from "lucide-react";
 
 export const allColumnsForTable = [
   {
@@ -48,7 +49,7 @@ export const allColumnsForTable = [
 export const renderCell = (
   job: GetJobResponse,
   columnKey: React.Key,
-  handleUpdateJob: (id: number) => void,
+  handleApproveJob: (id: number) => void,
   handleDeleteJob: (id: number) => void,
 ) => {
   const cellValue = job[columnKey as keyof GetJobResponse];
@@ -58,10 +59,24 @@ export const renderCell = (
     case ManagementJobKeys.YEAR_EXP:
     case ManagementJobKeys.TYPE:
     case ManagementJobKeys.CONTRACT:
+    case ManagementJobKeys.QUANTITY_OPENING:
+      return (
+        <p className="max-w-60 overflow-hidden text-ellipsis">
+          {cellValue as string}
+        </p>
+      );
+
     case ManagementJobKeys.IS_OPENING:
     case ManagementJobKeys.IS_APPROVE:
-    case ManagementJobKeys.QUANTITY_OPENING:
-      return cellValue;
+      return (
+        <Chip
+          size="sm"
+          color={cellValue ? "success" : "default"}
+          variant="flat"
+        >
+          {cellValue ? "Active" : "Inactive"}
+        </Chip>
+      );
 
     case ManagementJobKeys.CREATED_BY:
       return (
@@ -78,19 +93,28 @@ export const renderCell = (
       );
 
     case ManagementJobKeys.ACTIONS:
+      const { jobPostId, isApprove } = job;
+
       return (
-        <div className="flex gap-2">
+        <div className="flex items-center justify-center gap-2">
+          {!isApprove && (
+            <Button
+              isIconOnly
+              size="sm"
+              variant="light"
+              onPress={() => handleApproveJob(jobPostId)}
+            >
+              <Check className="text-slate-400" size={24} />
+            </Button>
+          )}
           <Button
-            variant="ioBordered"
-            onPress={() => handleUpdateJob(job[ManagementJobKeys.ID])}
+            isIconOnly
+            size="sm"
+            variant="light"
+            color="danger"
+            onPress={() => handleDeleteJob(jobPostId)}
           >
-            Edit
-          </Button>
-          <Button
-            variant="ioBordered"
-            onPress={() => handleDeleteJob(job[ManagementJobKeys.ID])}
-          >
-            Delete
+            <X className="text-red-400" size={24} />
           </Button>
         </div>
       );

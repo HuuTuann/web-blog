@@ -1,5 +1,5 @@
 import { ManagementBlogKeys } from "@/constants";
-import { useDialog } from "@/hooks";
+import { Toast, useDialog } from "@/hooks";
 import {
   useCreateBlog,
   useGetBlogDetail,
@@ -44,6 +44,7 @@ export const useBlogForm = ({ id }: Props) => {
           hideDialog();
           handleInvalidateBlogs();
           handleInvalidateBlogDetail();
+          Toast.Success("Blog updated successfully");
         },
         onError: (error) => {
           console.error("Error updating blog:", error);
@@ -54,6 +55,7 @@ export const useBlogForm = ({ id }: Props) => {
         onSuccess: () => {
           hideDialog();
           handleInvalidateBlogs();
+          Toast.Success("Blog created successfully");
         },
         onError: (error) => {
           console.error("Error creating blog:", error);
