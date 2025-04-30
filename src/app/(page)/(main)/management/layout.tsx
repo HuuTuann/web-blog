@@ -3,7 +3,7 @@ import { Navbar, SideBar } from "@/containers";
 import { SideBarOptions } from "@/types";
 import { UserRoundCog } from "lucide-react";
 
-export default function MainLayout({
+export default function ManagementLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
