@@ -41,6 +41,7 @@ export const useUpdateUserForm = ({ id }: Props) => {
         Toast.Success("User updated successfully");
       },
       onError: (error) => {
+        Toast.Error("Error updating user. Please try again.");
         console.error("Error updating user:", error);
       },
     });

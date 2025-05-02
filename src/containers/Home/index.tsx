@@ -9,7 +9,7 @@ export const Home = () => {
   const router = useRouter();
 
   const handleGetStarted = () => {
-    router.push(Paths.MANAGEMENT_USER);
+    router.push(Paths.USER);
   };
 
   return (

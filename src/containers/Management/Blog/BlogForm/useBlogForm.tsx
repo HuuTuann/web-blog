@@ -47,6 +47,7 @@ export const useBlogForm = ({ id }: Props) => {
           Toast.Success("Blog updated successfully");
         },
         onError: (error) => {
+          Toast.Error("Error updating blog. Please try again.");
           console.error("Error updating blog:", error);
         },
       });

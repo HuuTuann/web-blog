@@ -1,5 +1,5 @@
 import { ManagementBusinessKeys } from "@/constants";
-import { useDialog } from "@/hooks";
+import { Toast, useDialog } from "@/hooks";
 import {
   useCreateBusiness,
   useGetBusinessDetail,
@@ -44,8 +44,10 @@ export const useBusinessForm = ({ id }: Props) => {
           hideDialog();
           handleInvalidateBusinesses();
           handleInvalidateBusinessDetail();
+          Toast.Success("Business updated successfully");
         },
         onError: (error) => {
+          Toast.Error("Error updating business. Please try again.");
           console.error("Error updating business:", error);
         },
       });

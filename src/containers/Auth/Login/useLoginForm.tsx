@@ -1,4 +1,5 @@
 import { Paths, RoleKeys } from "@/constants";
+import { Toast } from "@/hooks";
 import { useLogin } from "@/queries";
 import { setCookie } from "@/services";
 import { LoginPayload } from "@/types";
@@ -44,10 +45,11 @@ export const useLoginForm = () => {
         ) {
           setCookie((data as { data: string }).data, 7);
           handleNavigate((data as { role: RoleKeys }).role);
+          Toast.Success("Login successfully!");
         }
       },
       onError: (error) => {
-        // Handle error here, e.g., show an error message
+        Toast.Error("Login failed. Please check your credentials.");
         console.error("Login failed:", error);
       },
     });

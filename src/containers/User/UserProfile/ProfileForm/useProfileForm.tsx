@@ -24,6 +24,7 @@ const useProfileForm = () => {
   });
 
   const onValid = (values: ProfileFormSchema) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, ...restValues } = values;
 
     onUpdateUserProfile(restValues, {

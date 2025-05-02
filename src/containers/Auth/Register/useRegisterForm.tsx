@@ -1,3 +1,4 @@
+import { Toast } from "@/hooks";
 import { useRegister } from "@/queries";
 import { RegisterFormValues, RegisterPayload } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,10 +26,11 @@ export const useRegisterForm = () => {
 
     onRegister(payload, {
       onSuccess: () => {
-        router.push("/login"); // Redirect to login page after successful registration
+        router.push("/login");
+        Toast.Success("Register successfully!");
       },
       onError: (error) => {
-        // Handle error here, e.g., show an error message
+        Toast.Error("Register failed. Please check your credentials.");
         console.error("Register failed:", error);
       },
     });

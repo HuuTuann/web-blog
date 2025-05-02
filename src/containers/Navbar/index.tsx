@@ -2,6 +2,7 @@
 
 import { Button } from "@/components";
 import { Paths, RootPaths } from "@/constants";
+import { Toast } from "@/hooks";
 import { removeCookie } from "@/services";
 import { LogOut } from "lucide-react";
 import { usePathname } from "next/navigation";
@@ -20,6 +21,7 @@ export const Navbar = () => {
 
   const handleLogout = useCallback(() => {
     removeCookie();
+    Toast.Success("Logout successfully!");
     window.open(`${process.env.NEXT_PUBLIC_WEB_URL}/login`, "_self");
   }, []);
 

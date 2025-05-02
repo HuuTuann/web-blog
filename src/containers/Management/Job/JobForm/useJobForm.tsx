@@ -1,5 +1,5 @@
 import { JobOpeningApprove, ManagementJobKeys } from "@/constants";
-import { useDialog } from "@/hooks";
+import { Toast, useDialog } from "@/hooks";
 import { formatDate } from "@/lib";
 import {
   useCreateJob,
@@ -53,8 +53,10 @@ export const useJobForm = ({ id }: Props) => {
           hideDialog();
           handleInvalidateJobs();
           handleInvalidateJobDetail();
+          Toast.Success("Job updated successfully");
         },
         onError: (error) => {
+          Toast.Error("Error updating job. Please try again.");
           console.error("Error updating job:", error);
         },
       });
