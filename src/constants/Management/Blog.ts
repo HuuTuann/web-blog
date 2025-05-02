@@ -1,8 +1,8 @@
 export enum ManagementBlogKeys {
   ID = "blogId",
-  CREATE_AT = "createAt",
+  CREATED_AT = "createdAt",
   MODIFIED_AT = "modifiedAt",
-  CREATE_BY = "createBy",
+  CREATED_BY = "createdBy",
   MODIFIED_BY = "modifiedBy",
   TITLE = "title",
   CONTENT = "content",

@@ -14,7 +14,7 @@ export const allColumnsForTable = [
     label: "Content",
   },
   {
-    key: ManagementBlogKeys.CREATE_BY,
+    key: ManagementBlogKeys.CREATED_BY,
     label: "Created By",
   },
   {
@@ -40,8 +40,8 @@ export const renderCell = (
       return cellValue;
     case ManagementBlogKeys.CONTENT:
       return cellValue;
-    case ManagementBlogKeys.CREATE_BY:
-      const createdAt = managementBlog[ManagementBlogKeys.CREATE_AT];
+    case ManagementBlogKeys.CREATED_BY:
+      const createdAt = managementBlog[ManagementBlogKeys.CREATED_AT];
       return (
         <div className="flex flex-col">
           <p className="text-bold text-small capitalize">{cellValue}</p>

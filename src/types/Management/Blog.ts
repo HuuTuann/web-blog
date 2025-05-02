@@ -6,10 +6,11 @@ export interface ListBlogsResponse {
   [ManagementBlogKeys.ID]: number;
   [ManagementBlogKeys.MODIFIED_AT]: string;
   [ManagementBlogKeys.MODIFIED_BY]: string;
-  [ManagementBlogKeys.CREATE_AT]: string;
-  [ManagementBlogKeys.CREATE_BY]: string;
+  [ManagementBlogKeys.CREATED_AT]: string;
+  [ManagementBlogKeys.CREATED_BY]: string;
   [ManagementBlogKeys.TITLE]: string;
   [ManagementBlogKeys.CONTENT]: string;
+  [ManagementBlogKeys.IMAGE]: string;
 }
 
 export interface UseGetBlogParams {
