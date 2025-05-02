@@ -1,4 +1,4 @@
-import { Paths } from "@/constants";
+import { Paths, RoleKeys } from "@/constants";
 import { useLogin } from "@/queries";
 import { setCookie } from "@/services";
 import { LoginPayload } from "@/types";
@@ -17,14 +17,33 @@ export const useLoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const { onLogin, isLoadingLogin } = useLogin(); // Assuming you want to use the login mutation here
+  const { onLogin, isLoadingLogin } = useLogin();
+
+  const handleNavigate = (role: RoleKeys) => {
+    switch (role) {
+      case RoleKeys.ADMIN:
+        router.push(Paths.MANAGEMENT_USER);
+        break;
+      case RoleKeys.BUSINESS:
+        router.push(Paths.USER);
+        break;
+      case RoleKeys.CANDIDATE:
+        router.push(Paths.USER);
+        break;
+    }
+  };
 
   const handleLogin = (values: LoginPayload) => {
     onLogin(values, {
       onSuccess: (data: unknown) => {
-        if (data && typeof data === "object" && "data" in data) {
+        if (
+          data &&
+          typeof data === "object" &&
+          "data" in data &&
+          "role" in data
+        ) {
           setCookie((data as { data: string }).data, 7);
-          router.push(Paths.MANAGEMENT_USER);
+          handleNavigate((data as { role: RoleKeys }).role);
         }
       },
       onError: (error) => {
