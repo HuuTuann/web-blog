@@ -1,4 +1,4 @@
-import { useGetBlogsUser } from "@/queries";
+import { useGetBusinessesUser } from "@/queries";
 import { useEffect } from "react";
 
 type Props = {
@@ -6,10 +6,13 @@ type Props = {
 };
 
 export const BodyBusiness = ({ searchParams }: Props) => {
-  const { setBlogsParams } = useGetBlogsUser();
+  const { setBusinessesParams } = useGetBusinessesUser();
 
   useEffect(() => {
-    setBlogsParams((prev) => ({ ...prev, search: searchParams }));
+    setBusinessesParams((prev) => ({
+      ...prev,
+      ...(!!searchParams ? { search: searchParams } : {}),
+    }));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);

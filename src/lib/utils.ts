@@ -27,3 +27,11 @@ export const stringifyParams = (params: ParamsType) => {
 
   return result.slice(0, -1);
 };
+
+export const formatValueOrNull = (
+  value: string | number | boolean | null | undefined,
+  defaultValue: string | number | boolean = "--",
+) => {
+  if (!value) return defaultValue;
+  return value;
+};

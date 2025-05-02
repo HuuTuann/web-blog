@@ -21,7 +21,7 @@ export const useGetJobsUser = ({
     Error,
     PageResponseType<GetJobResponse>
   >({
-    queryKey: [QueryKey.GET_JOBS, params],
+    queryKey: [QueryKey.GET_JOBS_USER, params],
     queryFn: ({ queryKey }) => {
       const [, queryParams] = queryKey;
       return getJobsUser(queryParams as TableParams);

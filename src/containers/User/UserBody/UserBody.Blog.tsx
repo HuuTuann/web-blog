@@ -8,7 +8,10 @@ export const BodyBlog = ({ searchParams }: Props) => {
   const { setBlogsParams } = useGetBlogsUser();
 
   useEffect(() => {
-    setBlogsParams((prev) => ({ ...prev, search: searchParams }));
+    setBlogsParams((prev) => ({
+      ...prev,
+      ...(!!searchParams ? { search: searchParams } : {}),
+    }));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams]);

@@ -21,7 +21,7 @@ export const useGetBlogsUser = ({
     Error,
     PageResponseType<ListBlogsResponse>
   >({
-    queryKey: [QueryKey.GET_BLOGS, params],
+    queryKey: [QueryKey.GET_BLOGS_USER, params],
     queryFn: ({ queryKey }) => {
       const [, queryParams] = queryKey;
       return getBlogsUser(queryParams as TableParams);

@@ -21,7 +21,7 @@ export const useGetBusinessesUser = ({
     Error,
     PageResponseType<ListBusinessResponse>
   >({
-    queryKey: [QueryKey.GET_BUSINESSES, params],
+    queryKey: [QueryKey.GET_BUSINESSES_USER, params],
     queryFn: ({ queryKey }) => {
       const [, queryParams] = queryKey;
       return getBusinessUser(queryParams as TableParams);

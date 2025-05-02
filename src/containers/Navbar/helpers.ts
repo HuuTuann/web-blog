@@ -1,6 +1,6 @@
 import { Paths } from "@/constants";
 
-export const headerTitleMap = {
+const titleMap = {
   [Paths.MANAGEMENT_USER]: "Management User",
   [Paths.MANAGEMENT_BLOG]: "Management Blog",
   [Paths.MANAGEMENT_BUSINESS]: "Management Business",
@@ -8,3 +8,9 @@ export const headerTitleMap = {
 
   [Paths.USER]: "BestCV",
 } as const;
+
+const NavbarHelpers = {
+  titleMap,
+};
+
+export default NavbarHelpers;
