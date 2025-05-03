@@ -1,8 +1,5 @@
 import axios from "axios";
-import { isEmpty } from "lodash";
-import { getCookie } from "./accountService";
-
-const publicPaths = ["/login", "/register"];
+import { getCookie, removeCookie } from "./accountService";
 
 export const httpService = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SERVICE_URL,
@@ -14,13 +11,6 @@ export const httpService = axios.create({
 httpService.interceptors.request.use(
   (config) => {
     const token = getCookie();
-
-    const isPublicPath = publicPaths.some((path) => config.url?.includes(path));
-
-    if (!isPublicPath && isEmpty(token)) {
-      window.open(`${process.env.NEXT_PUBLIC_WEB_URL}/login`, "_self");
-      return Promise.reject("Unauthorized");
-    }
 
     if (token) {
       config.headers.Authorization = token;
@@ -36,10 +26,10 @@ httpService.interceptors.request.use(
 httpService.interceptors.response.use(
   (response) => response?.data,
   (error) => {
-    // if (error?.response?.status === 403) {
-    //   removeCookie();
-    //   window.open(`${process.env.NEXT_PUBLIC_WEB_URL}/login`, "_self");
-    // }
+    if (error?.response?.status === 403) {
+      removeCookie();
+      window.open(`${process.env.NEXT_PUBLIC_WEB_URL}/login`, "_self");
+    }
     return Promise.reject(error?.response?.data || error);
   },
 );
