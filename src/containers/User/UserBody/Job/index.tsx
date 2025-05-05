@@ -1,16 +1,22 @@
 import { Icons } from "@/assets";
 import { Button, View } from "@/components";
+import { useDialog } from "@/hooks";
 import { formatDate, formatValueOrNull } from "@/lib";
 import { useGetJobsUser } from "@/queries";
 import { Pagination, ScrollShadow, Spinner } from "@heroui/react";
-import { Dot } from "lucide-react";
+import { CheckCheck, Dot } from "lucide-react";
 import { useEffect } from "react";
+import ApplyForm from "./ApplyForm";
+import { getCookie } from "@/services";
+import { useRouter } from "next/navigation";
 
 type Props = {
   searchParams: string;
 };
 
 export const BodyJob = ({ searchParams }: Props) => {
+  const router = useRouter();
+  const { showDialog } = useDialog();
   const { jobs, jobsParams, totalPagesJobs, isLoadingJobs, setJobsParams } =
     useGetJobsUser();
 
@@ -28,6 +34,21 @@ export const BodyJob = ({ searchParams }: Props) => {
       ...prev,
       pageNo,
     }));
+  };
+
+  const handleApplyNow = (id: number) => {
+    const isLoggedIn = !!getCookie();
+
+    if (!isLoggedIn) {
+      router.push("/login");
+    } else
+      showDialog({
+        title: "Apply Now",
+        content: <ApplyForm id={id} />,
+        options: {
+          hideActions: true,
+        },
+      });
   };
 
   if (isLoadingJobs) return <Spinner size="lg" />;
@@ -50,6 +71,7 @@ export const BodyJob = ({ searchParams }: Props) => {
           levelDes,
           techStackDes,
           priceDesc,
+          userCV,
           createdDate,
           createdBy,
           modifiedBy,
@@ -99,7 +121,19 @@ export const BodyJob = ({ searchParams }: Props) => {
                   />
                 </div>
                 <div className="flex items-center gap-2">
-                  <Button variant="ioSolid">Apply Now</Button>
+                  {!!userCV ? (
+                    <div className="flex items-center gap-2 rounded-full bg-green-100 px-4 py-2 text-sm text-green-600">
+                      <CheckCheck />
+                      <p className="font-semibold">Applied</p>
+                    </div>
+                  ) : (
+                    <Button
+                      variant="ioBordered"
+                      onPress={() => handleApplyNow(jobPostId)}
+                    >
+                      Apply Now
+                    </Button>
+                  )}
                   <Button variant="ioSolid">View Detail</Button>
                 </div>
               </div>

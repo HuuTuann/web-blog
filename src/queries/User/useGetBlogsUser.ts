@@ -32,7 +32,7 @@ export const useGetBlogsUser = ({
   const queryClient = useQueryClient();
   const handleInvalidateBlogs = () => {
     queryClient.invalidateQueries({
-      queryKey: [QueryKey.GET_BLOGS, params],
+      queryKey: [QueryKey.GET_BLOGS_USER, params],
     });
   };
 

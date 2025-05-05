@@ -19,6 +19,7 @@ export enum ManagementJobKeys {
   MODIFIED_AT = "modifiedDate",
   CREATED_BY = "createdBy",
   MODIFIED_BY = "modifiedBy",
+  USER_CV = "userCV",
   ACTIONS = "actions",
 }
 

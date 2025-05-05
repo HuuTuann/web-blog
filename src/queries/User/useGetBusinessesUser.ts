@@ -32,7 +32,7 @@ export const useGetBusinessesUser = ({
   const queryClient = useQueryClient();
   const handleInvalidateBusinesses = () => {
     queryClient.invalidateQueries({
-      queryKey: [QueryKey.GET_BUSINESSES, params],
+      queryKey: [QueryKey.GET_BUSINESSES_USER, params],
     });
   };
 

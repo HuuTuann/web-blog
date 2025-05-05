@@ -15,6 +15,7 @@ export interface GetJobResponse {
   [ManagementJobKeys.TECH_STACK_DESC]: string;
   [ManagementJobKeys.DESC]: string;
   [ManagementJobKeys.PRICE_DESC]: string;
+  [ManagementJobKeys.USER_CV]: string;
   [ManagementJobKeys.CREATED_AT]: string;
   [ManagementJobKeys.MODIFIED_AT]: string;
   [ManagementJobKeys.CREATED_BY]: string;

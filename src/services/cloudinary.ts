@@ -45,7 +45,10 @@ export const uploadPDFToCloudinary = async (file: File) => {
       },
     );
 
-    return response.data?.secure_url;
+    return {
+      url: response.data?.secure_url,
+      name: response.data?.original_filename,
+    };
   } catch (error) {
     console.error(error);
     throw error;

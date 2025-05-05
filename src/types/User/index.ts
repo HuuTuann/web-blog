@@ -18,3 +18,8 @@ export interface UserProfilePayload {
   [UserKeys.AVATAR]: string;
   [UserKeys.PASSWORD]: string;
 }
+
+export interface UserApplyFormPayload {
+  [UserKeys.JOB_ID]: number;
+  [UserKeys.FILE]: string;
+}

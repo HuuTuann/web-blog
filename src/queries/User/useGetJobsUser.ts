@@ -32,7 +32,7 @@ export const useGetJobsUser = ({
   const queryClient = useQueryClient();
   const handleInvalidateJobs = () => {
     queryClient.invalidateQueries({
-      queryKey: [QueryKey.GET_JOBS, params],
+      queryKey: [QueryKey.GET_JOBS_USER],
     });
   };
 

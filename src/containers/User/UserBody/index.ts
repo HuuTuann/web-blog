@@ -1,6 +1,6 @@
 import { BodyBlog } from "./UserBody.Blog";
 import { BodyBusiness } from "./UserBody.Business";
-import { BodyJob } from "./UserBody.Job";
+import { BodyJob } from "./Job";
 
 const UserBody = {
   Blog: BodyBlog,
