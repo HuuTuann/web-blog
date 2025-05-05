@@ -11,6 +11,8 @@ export interface ListBusinessResponse {
   [ManagementBusinessKeys.SLOGAN]: string;
   [ManagementBusinessKeys.INDUSTRY]: string;
   [ManagementBusinessKeys.ADDRESS]: string;
+  [ManagementBusinessKeys.IMAGE]: string;
+  [ManagementBusinessKeys.BENEFITS]: string;
   [ManagementBusinessKeys.CREATED_AT]: string;
   [ManagementBusinessKeys.MODIFIED_AT]: string;
   [ManagementBusinessKeys.CREATED_BY]: string;

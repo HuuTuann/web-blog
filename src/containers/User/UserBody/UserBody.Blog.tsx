@@ -1,4 +1,5 @@
-import { Button } from "@/components";
+import { Icons } from "@/assets";
+import { Button, View } from "@/components";
 import { formatDate, formatValueOrNull } from "@/lib";
 import { useGetBlogsUser } from "@/queries";
 import { Image, Pagination, ScrollShadow, Spinner } from "@heroui/react";
@@ -34,6 +35,10 @@ export const BodyBlog = ({ searchParams }: Props) => {
 
   if (isLoadingBlogs) return <Spinner size="lg" />;
 
+  if (!blogs || blogs.length === 0) {
+    return <Icons.NoData size={320} />;
+  }
+
   return (
     <div className="flex w-full flex-col items-center gap-5">
       {blogs.map((blog) => {
@@ -54,7 +59,11 @@ export const BodyBlog = ({ searchParams }: Props) => {
             className="flex w-full items-start gap-5 rounded-lg border p-5 shadow-sm hover:shadow-md"
           >
             <div className="flex">
-              <Image src={image} alt="Blog Image" className="w-32" />
+              {image ? (
+                <Image src={image} alt="Blog Image" className="w-32" />
+              ) : (
+                <Icons.NoImage size={128} />
+              )}
             </div>
             <div className="flex flex-1 flex-col gap-2">
               <h3 className="text-lg font-semibold">{title}</h3>
@@ -62,9 +71,15 @@ export const BodyBlog = ({ searchParams }: Props) => {
                 <p className="text-sm text-slate-500">{content}</p>
               </ScrollShadow>
               <div className="flex w-full items-center justify-between">
-                <div className="text-bold text-small text-slate-400">
-                  <p>{`Create By: ${formatValueOrNull(createdBy)} - ${formatValueOrNull(formatDate(createdAt))}`}</p>
-                  <p>{`Modify By: ${formatValueOrNull(modifiedBy)} - ${formatValueOrNull(formatDate(modifiedAt))}`}</p>
+                <div>
+                  <View
+                    label="Create By"
+                    value={`${formatValueOrNull(createdBy)} - ${formatValueOrNull(formatDate(createdAt))}`}
+                  />
+                  <View
+                    label="Modify By"
+                    value={`${formatValueOrNull(modifiedBy)} - ${formatValueOrNull(formatDate(modifiedAt))}`}
+                  />
                 </div>
                 <Button variant="ioSolid">View Detail</Button>
               </div>

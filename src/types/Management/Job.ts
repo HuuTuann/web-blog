@@ -11,6 +11,10 @@ export interface GetJobResponse {
   [ManagementJobKeys.IS_OPENING]: string;
   [ManagementJobKeys.IS_APPROVE]: string;
   [ManagementJobKeys.QUANTITY_OPENING]: number;
+  [ManagementJobKeys.LEVEL_DES]: string;
+  [ManagementJobKeys.TECH_STACK_DESC]: string;
+  [ManagementJobKeys.DESC]: string;
+  [ManagementJobKeys.PRICE_DESC]: string;
   [ManagementJobKeys.CREATED_AT]: string;
   [ManagementJobKeys.MODIFIED_AT]: string;
   [ManagementJobKeys.CREATED_BY]: string;

@@ -37,16 +37,11 @@ export const useLoginForm = () => {
   const handleLogin = (values: LoginPayload) => {
     onLogin(values, {
       onSuccess: (data: unknown) => {
-        if (
-          data &&
-          typeof data === "object" &&
-          "data" in data &&
-          "role" in data
-        ) {
+        if (data && typeof data === "object") {
           setCookie((data as { data: string }).data, 7);
           handleNavigate((data as { role: RoleKeys }).role);
-          Toast.Success("Login successfully!");
         }
+        Toast.Success("Login successfully!");
       },
       onError: (error) => {
         Toast.Error("Login failed. Please check your credentials.");
