@@ -8,6 +8,8 @@ const titleMap = {
 
   [Paths.USER]: "BestCV",
   [Paths.USER_DETAIL]: "BestCV",
+
+  [Paths.BUSINESS]: "BestCV",
 } as const;
 
 const NavbarHelpers = {
