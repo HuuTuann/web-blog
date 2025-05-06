@@ -1,5 +1,4 @@
 export * from "./Base";
-export * from "./Business";
 export * from "./Icons";
 export * from "./Login";
 export * from "./Management";

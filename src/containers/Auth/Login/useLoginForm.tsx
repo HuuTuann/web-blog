@@ -26,7 +26,7 @@ export const useLoginForm = () => {
         router.push(Paths.MANAGEMENT_USER);
         break;
       case RoleKeys.BUSINESS:
-        router.push(Paths.USER);
+        router.push(Paths.BUSINESS);
         break;
       case RoleKeys.CANDIDATE:
         router.push(Paths.USER);

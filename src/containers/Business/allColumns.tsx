@@ -1,95 +1,136 @@
-import { ManagementBusinessKeys } from "@/constants";
-import { formatDate } from "@/lib";
-import { ListBusinessResponse } from "@/types";
-import { Button } from "@heroui/react";
-import { X } from "lucide-react";
+import { ManagementJobKeys } from "@/constants";
+import { GetJobResponse } from "@/types";
+import { Button, Chip } from "@heroui/react";
+import { Check, Pencil, X } from "lucide-react";
 
 export const allColumnsForTable = [
   {
-    key: ManagementBusinessKeys.NAME,
-    label: "Name",
+    key: ManagementJobKeys.TITLE,
+    label: "Title",
   },
   {
-    key: ManagementBusinessKeys.SIZE,
-    label: "Size",
+    key: ManagementJobKeys.YEAR_EXP,
+    label: "Year of Experience",
   },
   {
-    key: ManagementBusinessKeys.NATIONALITY,
-    label: "Nationality",
+    key: ManagementJobKeys.TYPE,
+    label: "Type",
   },
   {
-    key: ManagementBusinessKeys.SLOGAN,
-    label: "Slogan",
+    key: ManagementJobKeys.CONTRACT,
+    label: "Contract",
   },
   {
-    key: ManagementBusinessKeys.CREATED_BY,
-    label: "Created",
+    key: ManagementJobKeys.IS_OPENING,
+    label: "Is Opening",
   },
   {
-    key: ManagementBusinessKeys.MODIFIED_BY,
-    label: "Modified",
+    key: ManagementJobKeys.IS_APPROVE,
+    label: "Is Approve",
   },
   {
-    key: ManagementBusinessKeys.ACTIONS,
+    key: ManagementJobKeys.QUANTITY_OPENING,
+    label: "Quantity Opening",
+  },
+  {
+    key: ManagementJobKeys.CREATED_BY,
+    label: "Created By",
+  },
+  {
+    key: ManagementJobKeys.MODIFIED_BY,
+    label: "Modified By",
+  },
+  {
+    key: ManagementJobKeys.ACTIONS,
     label: "Actions",
   },
 ];
 
 export const renderCell = (
-  managementBusiness: ListBusinessResponse,
+  job: GetJobResponse,
   columnKey: React.Key,
-  handleDeleteBusiness: (id: number) => void,
+  handleApproveJob: (id: number) => void,
+  handleUpdateJob: (id: number) => void,
+  handleDeleteJob: (id: number) => void,
 ) => {
-  const cellValue = managementBusiness[columnKey as keyof ListBusinessResponse];
+  const cellValue = job[columnKey as keyof GetJobResponse];
 
   switch (columnKey) {
-    case ManagementBusinessKeys.NAME:
-    case ManagementBusinessKeys.SIZE:
-    case ManagementBusinessKeys.NATIONALITY:
-    case ManagementBusinessKeys.SLOGAN:
+    case ManagementJobKeys.TITLE:
+    case ManagementJobKeys.YEAR_EXP:
+    case ManagementJobKeys.TYPE:
+    case ManagementJobKeys.CONTRACT:
+    case ManagementJobKeys.QUANTITY_OPENING:
       return (
         <p className="max-w-60 overflow-hidden text-ellipsis">
           {cellValue as string}
         </p>
       );
 
-    case ManagementBusinessKeys.CREATED_BY:
-      const createdAt = managementBusiness[ManagementBusinessKeys.CREATED_AT];
+    case ManagementJobKeys.IS_OPENING:
+    case ManagementJobKeys.IS_APPROVE:
+      return (
+        <Chip
+          size="sm"
+          color={cellValue ? "success" : "default"}
+          variant="flat"
+        >
+          {cellValue ? "Active" : "Inactive"}
+        </Chip>
+      );
+
+    case ManagementJobKeys.CREATED_BY:
       return (
         <div className="flex flex-col">
           <p className="text-bold text-small capitalize">{cellValue}</p>
-          <p className="text-bold text-tiny capitalize text-default-400">
-            {formatDate(createdAt)}
-          </p>
         </div>
       );
 
-    case ManagementBusinessKeys.MODIFIED_BY:
-      const modifiedAt = managementBusiness[ManagementBusinessKeys.MODIFIED_AT];
+    case ManagementJobKeys.MODIFIED_BY:
       return (
         <div className="flex flex-col">
           <p className="text-bold text-small capitalize">{cellValue}</p>
-          <p className="text-bold text-tiny capitalize text-default-400">
-            {formatDate(modifiedAt)}
-          </p>
         </div>
       );
 
-    case ManagementBusinessKeys.ACTIONS:
-      const id = managementBusiness[ManagementBusinessKeys.ID];
+    case ManagementJobKeys.ACTIONS:
+      const { jobPostId, isApprove } = job;
 
       return (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-end gap-2">
+          {!isApprove && (
+            <Button
+              isIconOnly
+              size="sm"
+              variant="light"
+              onPress={() => handleApproveJob(jobPostId)}
+            >
+              <Check className="text-slate-400" size={24} />
+            </Button>
+          )}
+          <Button
+            isIconOnly
+            size="sm"
+            variant="light"
+            onPress={() => handleUpdateJob(jobPostId)}
+          >
+            <Pencil className="text-slate-400" size={20} />
+          </Button>
           <Button
             isIconOnly
             size="sm"
             variant="light"
             color="danger"
-            onPress={() => handleDeleteBusiness(id)}
+            onPress={() => handleDeleteJob(jobPostId)}
           >
             <X className="text-red-400" size={24} />
           </Button>
         </div>
+      );
+
+    default:
+      return (
+        <p className="overflow-hidden text-ellipsis">{cellValue as string}</p>
       );
   }
 };

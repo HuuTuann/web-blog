@@ -1,5 +1,5 @@
-import { Business } from "@/containers";
+import { JobOfBusiness } from "@/containers";
 
 export default function BusinessPage() {
-  return <Business />;
+  return <JobOfBusiness />;
 }
