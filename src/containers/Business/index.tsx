@@ -1,8 +1,12 @@
 "use client";
 
-import { ManagementBusinessKeys } from "@/constants";
+import { ManagementJobKeys } from "@/constants";
 import { Toast, useDialog } from "@/hooks";
-import { useDeleteBusiness, useGetBusinessesBusiness } from "@/queries";
+import {
+  useApproveJobOfBusiness,
+  useDeleteJobOfBusiness,
+  useGetJobOfBusiness,
+} from "@/queries";
 import {
   Pagination,
   Select,
@@ -16,49 +20,50 @@ import {
   TableRow,
 } from "@heroui/react";
 import { allColumnsForTable, renderCell } from "./allColumns";
+import { Button } from "@/components";
+import { JobForm } from "./JobForm";
 
-export const Business = () => {
+export const JobOfBusiness = () => {
   const { showDialog, hideDialog } = useDialog();
   const {
-    businesses,
-    businessesParams,
-    totalPagesBusinesses,
-    setBusinessesParams,
-    handleInvalidateBusinesses,
-  } = useGetBusinessesBusiness();
+    jobs,
+    totalPagesJobs,
+    jobsParams,
+    setJobsParams,
+    handleInvalidateJobs,
+  } = useGetJobOfBusiness();
 
-  const { onDeleteBusiness } = useDeleteBusiness();
+  const { onDeleteJob } = useDeleteJobOfBusiness();
+  const { onApproveJob } = useApproveJobOfBusiness();
 
   const handlePageSizeChange = (keys: SharedSelection) => {
     const pageSize = Number(Array.from(keys)[0]);
-    setBusinessesParams((prev) => ({
+    setJobsParams((prev) => ({
       ...prev,
       pageSize,
     }));
   };
 
   const handlePageNoChange = (pageNo: number) => {
-    setBusinessesParams((prev) => ({
+    setJobsParams((prev) => ({
       ...prev,
       pageNo,
     }));
   };
 
-  const handleCreateJob = () => {};
-
-  const handleDeleteBusiness = (id: number) => {
+  const handleDeleteJob = (id: number) => {
     showDialog({
-      title: "Delete Business",
-      content: `Are you sure you want to delete this business?`,
+      title: "Delete Job",
+      content: `Are you sure you want to delete this job?`,
       options: {
         onOk: () => {
-          onDeleteBusiness(
-            { [ManagementBusinessKeys.ID]: id },
+          onDeleteJob(
+            { [ManagementJobKeys.ID]: id },
             {
               onSuccess: () => {
                 hideDialog();
-                handleInvalidateBusinesses();
-                Toast.Success("Business deleted successfully");
+                handleInvalidateJobs();
+                Toast.Success("Job deleted successfully");
               },
               onError: (error) => {
                 console.error("Error deleting blog:", error);
@@ -70,14 +75,65 @@ export const Business = () => {
     });
   };
 
+  const handleApproveJob = (id: number) => {
+    showDialog({
+      title: "Approve Business",
+      content: "Are you sure you want to approve this business?",
+      options: {
+        onOk: () => {
+          onApproveJob(
+            { [ManagementJobKeys.ID]: id },
+            {
+              onSuccess: () => {
+                hideDialog();
+                handleInvalidateJobs();
+                Toast.Success("Job approved successfully");
+              },
+              onError: (error) => {
+                console.error("Error approving business:", error);
+              },
+            },
+          );
+        },
+      },
+    });
+  };
+
+  const handleCreateJob = () => {
+    showDialog({
+      title: "Create Job",
+      content: <JobForm />,
+      options: {
+        size: "5xl",
+        hideActions: true,
+      },
+    });
+  };
+
+  const handleUpdateJob = (id: number) => {
+    showDialog({
+      title: "Update Job",
+      content: <JobForm id={id} />,
+      options: {
+        size: "5xl",
+        hideActions: true,
+      },
+    });
+  };
+
   return (
     <div className="flex h-full w-full flex-col gap-4">
+      <div className="flex w-full justify-end">
+        <Button variant="ioSolid" onPress={() => handleCreateJob()}>
+          Create Job
+        </Button>
+      </div>
       <Table
         aria-label="Example table with dynamic content"
         isHeaderSticky
         isVirtualized
         classNames={{
-          base: "h-[calc(100%-56px)]",
+          base: "h-[calc(100%-96px)]",
           wrapper: "!h-full",
         }}
       >
@@ -86,24 +142,26 @@ export const Business = () => {
             <TableColumn
               key={column.key}
               align={
-                column.key === ManagementBusinessKeys.ACTIONS
-                  ? "center"
-                  : "start"
+                column.key === ManagementJobKeys.ACTIONS ? "center" : "start"
               }
-              width={
-                column.key === ManagementBusinessKeys.ACTIONS ? 80 : undefined
-              }
+              width={column.key === ManagementJobKeys.ACTIONS ? 80 : undefined}
             >
               {column.label}
             </TableColumn>
           )}
         </TableHeader>
         <TableBody emptyContent="No users found">
-          {businesses.map((business) => (
-            <TableRow key={business[ManagementBusinessKeys.ID]}>
+          {jobs.map((job) => (
+            <TableRow key={job[ManagementJobKeys.ID]}>
               {(columnKey) => (
                 <TableCell className="overflow-hidden text-ellipsis text-nowrap">
-                  {renderCell(business, columnKey, handleDeleteBusiness)}
+                  {renderCell(
+                    job,
+                    columnKey,
+                    handleApproveJob,
+                    handleUpdateJob,
+                    handleDeleteJob,
+                  )}
                 </TableCell>
               )}
             </TableRow>
@@ -116,7 +174,7 @@ export const Business = () => {
           variant="bordered"
           className="w-24"
           disallowEmptySelection
-          defaultSelectedKeys={[businessesParams?.pageSize?.toString() ?? "10"]}
+          defaultSelectedKeys={[jobsParams?.pageSize?.toString() ?? "10"]}
           onSelectionChange={handlePageSizeChange}
         >
           <SelectItem key={"10"}>10</SelectItem>
@@ -124,11 +182,11 @@ export const Business = () => {
           <SelectItem key={"15"}>15</SelectItem>
         </Select>
         <Pagination
-          key={`pagination-${totalPagesBusinesses}-${businessesParams?.pageNo}`}
+          key={`pagination-${totalPagesJobs}-${jobsParams?.pageNo}`}
           aria-label="page-no"
           showControls
-          initialPage={businessesParams?.pageNo}
-          total={totalPagesBusinesses}
+          initialPage={jobsParams?.pageNo}
+          total={totalPagesJobs}
           onChange={handlePageNoChange}
         />
       </div>

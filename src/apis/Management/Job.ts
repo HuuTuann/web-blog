@@ -3,6 +3,7 @@ import { stringifyParams } from "@/lib";
 import { httpService } from "@/services";
 import {
   ApproveJobPayload,
+  CreateJobFormPayload,
   DeleteJobPayload,
   GetJobDetailParams,
   JobFormPayload,
@@ -17,7 +18,7 @@ export const getJobDetail = async (params: GetJobDetailParams) => {
   return httpService.get(`/api/job/${params?.[ManagementJobKeys.ID]}`);
 };
 
-export const createJob = async (payload: JobFormPayload) => {
+export const createJob = async (payload: CreateJobFormPayload) => {
   return httpService.post("/api/job", payload);
 };
 

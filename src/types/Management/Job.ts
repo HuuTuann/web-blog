@@ -39,15 +39,29 @@ export interface JobFormPayload {
   [ManagementJobKeys.PRICE_DESC]: string;
   [ManagementJobKeys.RECRUITMENT_PROG]: string;
   [ManagementJobKeys.DEADLINE]: string;
-  [ManagementJobKeys.LEVEL_DES]: string;
-  [ManagementJobKeys.LEVEL_CODE]: string;
   [ManagementJobKeys.TECH_STACK_DESC]: string;
   [ManagementJobKeys.TYPE]: string;
   [ManagementJobKeys.CONTRACT]: string;
   [ManagementJobKeys.BENEFIT]: string;
   [ManagementJobKeys.QUANTITY_OPENING]: string;
   [ManagementJobKeys.IS_OPENING]: boolean;
-  [ManagementJobKeys.IS_APPROVE]: boolean;
+}
+
+export interface CreateJobFormPayload {
+  [ManagementJobKeys.TITLE]: string;
+  [ManagementJobKeys.YEAR_EXP]: string;
+  [ManagementJobKeys.DESC]: string;
+  [ManagementJobKeys.PRICE_DESC]: string;
+  [ManagementJobKeys.RECRUITMENT_PROG]: string;
+  [ManagementJobKeys.DEADLINE]: string;
+  [ManagementJobKeys.LEVEL_DES]?: string;
+  [ManagementJobKeys.LEVEL_CODE]?: string;
+  [ManagementJobKeys.TECH_STACK_DESC]: string;
+  [ManagementJobKeys.TYPE]: string;
+  [ManagementJobKeys.CONTRACT]: string;
+  [ManagementJobKeys.BENEFIT]: string;
+  [ManagementJobKeys.QUANTITY_OPENING]: string;
+  [ManagementJobKeys.IS_OPENING]: boolean;
 }
 
 export interface JobDetailResponse {
