@@ -1,14 +1,17 @@
 import { Icons } from "@/assets";
 import { Button, View } from "@/components";
+import { Paths, UserOption, UserParams } from "@/constants";
 import { formatDate, formatValueOrNull } from "@/lib";
 import { useGetBlogsUser } from "@/queries";
 import { Image, Pagination, ScrollShadow, Spinner } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 type Props = {
   searchParams: string;
 };
 export const BodyBlog = ({ searchParams }: Props) => {
+  const router = useRouter();
   const {
     blogs,
     blogsParams,
@@ -81,7 +84,16 @@ export const BodyBlog = ({ searchParams }: Props) => {
                     value={`${formatValueOrNull(modifiedBy)} - ${formatValueOrNull(formatDate(modifiedAt))}`}
                   />
                 </div>
-                <Button variant="ioSolid">View Detail</Button>
+                <Button
+                  variant="ioSolid"
+                  onPress={() =>
+                    router.push(
+                      `${Paths.USER_DETAIL}/${blogId}?${UserParams.OPTION}=${UserOption.BLOG}`,
+                    )
+                  }
+                >
+                  View Detail
+                </Button>
               </div>
             </div>
           </div>

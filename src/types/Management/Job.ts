@@ -65,7 +65,11 @@ export interface JobDetailResponse {
   [ManagementJobKeys.LEVEL_DES]: string;
   [ManagementJobKeys.TECH_STACK_DESC]: string;
   [ManagementJobKeys.PRICE_DESC]: string;
-  [ManagementJobKeys.BENEFIT]: string;
+  [ManagementJobKeys.USER_CV]: string;
+  [ManagementJobKeys.CREATED_AT]: string;
+  [ManagementJobKeys.CREATED_BY]: string;
+  [ManagementJobKeys.MODIFIED_AT]: string;
+  [ManagementJobKeys.MODIFIED_BY]: string;
 }
 
 export interface GetJobDetailParams {

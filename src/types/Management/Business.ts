@@ -57,6 +57,12 @@ export interface BusinessDetailResponse {
   [ManagementBusinessKeys.IMAGE]: string;
   [ManagementBusinessKeys.CONTACT]: string;
   [ManagementBusinessKeys.BENEFITS]: string;
+  [ManagementBusinessKeys.INDUSTRY]: string;
+  [ManagementBusinessKeys.ADDRESS]: string;
+  [ManagementBusinessKeys.CREATED_AT]: string;
+  [ManagementBusinessKeys.MODIFIED_AT]: string;
+  [ManagementBusinessKeys.CREATED_BY]: string;
+  [ManagementBusinessKeys.MODIFIED_BY]: string;
 }
 
 export interface GetBusinessDetailParams {

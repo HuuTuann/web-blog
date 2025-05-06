@@ -16,8 +16,13 @@ export const Navbar = () => {
 
   const getHeaderTitle = useCallback(() => {
     if (Object.values(Paths).includes(pathname as Paths)) {
-      return NavbarHelpers.titleMap[pathname as Paths];
+      if (pathname in NavbarHelpers.titleMap) {
+        return NavbarHelpers.titleMap[
+          pathname as keyof typeof NavbarHelpers.titleMap
+        ];
+      }
     }
+    return NavbarHelpers.titleMap[Paths.USER_DETAIL];
   }, [pathname]);
 
   const handleLogout = useCallback(() => {

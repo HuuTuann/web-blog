@@ -4,7 +4,7 @@ export enum ManagementJobKeys {
   YEAR_EXP = "yearExp",
   TYPE = "jobType",
   DESC = "jobPostDes",
-  PRICE_DESC = "priceDesc",
+  PRICE_DESC = "priceDes",
   RECRUITMENT_PROG = "recruitmentProg",
   DEADLINE = "deadline",
   LEVEL_DES = "levelDes",

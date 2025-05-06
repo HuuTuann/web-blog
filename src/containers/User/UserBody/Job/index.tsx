@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import ApplyForm from "./ApplyForm";
 import { getCookie } from "@/services";
 import { useRouter } from "next/navigation";
+import { Paths, UserOption, UserParams } from "@/constants";
 
 type Props = {
   searchParams: string;
@@ -70,7 +71,7 @@ export const BodyJob = ({ searchParams }: Props) => {
           contractType,
           levelDes,
           techStackDes,
-          priceDesc,
+          priceDes,
           userCV,
           createdDate,
           createdBy,
@@ -108,7 +109,7 @@ export const BodyJob = ({ searchParams }: Props) => {
               </div>
               <View label="Level Des" value={levelDes} />
               <View label="Tech Stack Des" value={techStackDes} />
-              <View label="Price Des" value={priceDesc} />
+              <View label="Price Des" value={priceDes} />
               <div className="flex w-full items-center justify-between">
                 <div className="text-bold text-small text-slate-400">
                   <View
@@ -134,7 +135,16 @@ export const BodyJob = ({ searchParams }: Props) => {
                       Apply Now
                     </Button>
                   )}
-                  <Button variant="ioSolid">View Detail</Button>
+                  <Button
+                    variant="ioSolid"
+                    onPress={() =>
+                      router.push(
+                        `${Paths.USER_DETAIL}/${jobPostId}?${UserParams.OPTION}=${UserOption.JOB}`,
+                      )
+                    }
+                  >
+                    View Detail
+                  </Button>
                 </div>
               </div>
             </div>

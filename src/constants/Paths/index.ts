@@ -10,4 +10,5 @@ export enum Paths {
   MANAGEMENT_JOB = `${RootPaths.MANAGEMENT}/job`,
 
   USER = `${RootPaths.USER}`,
+  USER_DETAIL = `${RootPaths.USER}/detail`,
 }

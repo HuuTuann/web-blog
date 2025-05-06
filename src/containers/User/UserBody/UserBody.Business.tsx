@@ -1,9 +1,11 @@
 import { Icons } from "@/assets";
 import { Button, View } from "@/components";
+import { Paths, UserOption, UserParams } from "@/constants";
 import { formatDate, formatValueOrNull } from "@/lib";
 import { useGetBusinessesUser } from "@/queries";
 import { Image, Pagination, ScrollShadow, Spinner } from "@heroui/react";
 import { Dot } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 type Props = {
@@ -11,6 +13,7 @@ type Props = {
 };
 
 export const BodyBusiness = ({ searchParams }: Props) => {
+  const router = useRouter();
   const {
     businesses,
     businessesParams,
@@ -104,7 +107,16 @@ export const BodyBusiness = ({ searchParams }: Props) => {
                     value={`${formatValueOrNull(modifiedBy)} - ${formatValueOrNull(formatDate(modifiedDate))}`}
                   />
                 </div>
-                <Button variant="ioSolid">View Detail</Button>
+                <Button
+                  variant="ioSolid"
+                  onPress={() =>
+                    router.push(
+                      `${Paths.USER_DETAIL}/${businessId}?${UserParams.OPTION}=${UserOption.BUSINESS}`,
+                    )
+                  }
+                >
+                  View Detail
+                </Button>
               </div>
             </div>
           </div>

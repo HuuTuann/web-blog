@@ -7,6 +7,7 @@ const titleMap = {
   [Paths.MANAGEMENT_JOB]: "Management Job",
 
   [Paths.USER]: "BestCV",
+  [Paths.USER_DETAIL]: "BestCV",
 } as const;
 
 const NavbarHelpers = {
