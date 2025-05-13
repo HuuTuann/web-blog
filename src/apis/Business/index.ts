@@ -3,6 +3,7 @@ import { stringifyParams } from "@/lib";
 import { httpService } from "@/services";
 import {
   ApproveJobPayload,
+  BusinessFormPayload,
   DeleteJobPayload,
   GetJobDetailParams,
   JobFormPayload,
@@ -31,4 +32,12 @@ export const deleteJobOfBusiness = async (payload: DeleteJobPayload) => {
 
 export const approveJobOfBusiness = async (payload: ApproveJobPayload) => {
   return httpService.put(`/api/job/approve/${payload?.[ManagementJobKeys.ID]}`);
+};
+
+export const getBusinessProfile = async () => {
+  return httpService.get("/api/business/get-info");
+};
+
+export const updateBusinessProfile = async (payload: BusinessFormPayload) => {
+  return httpService.put("/api/business", payload);
 };

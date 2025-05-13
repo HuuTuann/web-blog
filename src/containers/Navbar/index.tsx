@@ -9,6 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useCallback } from "react";
 import UserProfile from "../User/UserProfile";
 import NavbarHelpers from "./helpers";
+import BusinessProfile from "../Business/BusinessProfile";
 
 export const Navbar = () => {
   const router = useRouter();
@@ -34,6 +35,7 @@ export const Navbar = () => {
   const isLoggedIn = !!getCookie();
 
   const isUser = pathname.startsWith(RootPaths.USER);
+  const isBusiness = pathname.startsWith(RootPaths.BUSINESS);
 
   return (
     <div className="flex h-[76px] w-full items-center justify-between border-b-2 border-slate-300 p-4">
@@ -42,6 +44,7 @@ export const Navbar = () => {
         {isLoggedIn ? (
           <>
             {isUser && <UserProfile />}
+            {isBusiness && <BusinessProfile />}
             <Button variant="ioLight" isIconOnly onPress={handleLogout}>
               <LogOut />
             </Button>
