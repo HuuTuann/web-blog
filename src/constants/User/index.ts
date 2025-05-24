@@ -24,4 +24,9 @@ export enum UserKeys {
   AVATAR = "avatar",
   PASSWORD = "password",
   CONFIRM_PASSWORD = "confirmPassword",
+  JD_TEXT = "jdText",
+  QUESTION = "question",
+  INTERVIEW_LANGUAGE = "interviewLanguage",
+  ANSWER = "answer",
+  EVALUATION = "evaluation",
 }

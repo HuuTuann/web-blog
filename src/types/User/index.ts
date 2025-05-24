@@ -23,3 +23,12 @@ export interface UserApplyFormPayload {
   [UserKeys.JOB_ID]: number;
   [UserKeys.FILE]: string;
 }
+
+export interface GenerateQuestionResponse {
+  [UserKeys.QUESTION]: string;
+  [UserKeys.JD_TEXT]: string;
+}
+
+export interface AnswerResponse {
+  [UserKeys.EVALUATION]: string;
+}

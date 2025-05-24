@@ -3,9 +3,13 @@ import {
   ManagementBusinessKeys,
   ManagementJobKeys,
 } from "@/constants";
+import { AnswerFormSchema } from "@/containers/User/UserInterview/AnswerForm/helpers";
+import { GenerateQuestionFormSchema } from "@/containers/User/UserInterview/GenerateQuestionForm/helpers";
 import { stringifyParams } from "@/lib";
 import { httpService } from "@/services";
 import {
+  AnswerResponse,
+  GenerateQuestionResponse,
   GetBlogDetailParams,
   GetBusinessDetailParams,
   GetJobDetailParams,
@@ -52,4 +56,20 @@ export const updateUserProfile = async (payload: UserProfilePayload) => {
 
 export const applyCV = async (payload: UserApplyFormPayload) => {
   return httpService.post("/api/candidate/apply", payload);
+};
+
+export const generateQuestion = async (
+  payload: GenerateQuestionFormSchema,
+): Promise<GenerateQuestionResponse> => {
+  return httpService.post("/jd/generate-question", payload, {
+    baseURL: "http://localhost:3001",
+  });
+};
+
+export const answer = async (
+  payload: AnswerFormSchema,
+): Promise<AnswerResponse> => {
+  return httpService.post("/jd/evaluate-answer", payload, {
+    baseURL: "http://localhost:3001",
+  });
 };
