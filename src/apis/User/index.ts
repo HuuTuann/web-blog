@@ -66,6 +66,23 @@ export const generateQuestion = async (
   });
 };
 
+export const generateQuestionUpload = async (
+  payload: GenerateQuestionFormSchema,
+): Promise<GenerateQuestionResponse> => {
+  const formData = new FormData();
+  const { interviewLanguage, uploadFile } = payload;
+
+  formData.append("interviewLanguage", interviewLanguage);
+  formData.append("uploadFile", uploadFile);
+
+  return httpService.post("/jd/generate-question", formData, {
+    baseURL: "http://localhost:3001",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
 export const answer = async (
   payload: AnswerFormSchema,
 ): Promise<AnswerResponse> => {

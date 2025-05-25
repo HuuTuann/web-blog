@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import GenerateQuestionHelpers, { GenerateQuestionFormSchema } from "./helpers";
 import { FieldErrors, useForm } from "react-hook-form";
-import { useGenerateQuestion } from "@/queries";
+import { useGenerateQuestion, useGenerateQuestionUpload } from "@/queries";
 import { Toast } from "@/hooks";
 
 type Props = {
@@ -18,17 +18,35 @@ const useGenerateQuestionForm = ({ setQuestion, setJDText }: Props) => {
   const { onGenerateQuestion, isLoadingGenerateQuestion } =
     useGenerateQuestion();
 
+  const { onGenerateQuestionUpload, isLoadingGenerateQuestionUpload } =
+    useGenerateQuestionUpload();
+
   const onValid = (values: GenerateQuestionFormSchema) => {
-    onGenerateQuestion(values, {
-      onSuccess: (data) => {
-        setJDText(data.jdText);
-        setQuestion(data.question);
-        Toast.Success("Question generated successfully!");
-      },
-      onError: () => {
-        Toast.Error("Error generating question");
-      },
-    });
+    const { inputType, ...restValues } = values;
+
+    if (inputType === "uploadFile") {
+      onGenerateQuestionUpload(restValues, {
+        onSuccess: (data) => {
+          setJDText(data.jdText);
+          setQuestion(data.question);
+          Toast.Success("Question generated successfully!");
+        },
+        onError: () => {
+          Toast.Error("Error generating question");
+        },
+      });
+    } else {
+      onGenerateQuestion(restValues, {
+        onSuccess: (data) => {
+          setJDText(data.jdText);
+          setQuestion(data.question);
+          Toast.Success("Question generated successfully!");
+        },
+        onError: () => {
+          Toast.Error("Error generating question");
+        },
+      });
+    }
   };
 
   const onInvalid = (errors: FieldErrors<GenerateQuestionFormSchema>) => {
@@ -38,7 +56,8 @@ const useGenerateQuestionForm = ({ setQuestion, setJDText }: Props) => {
   return {
     ...formReturns,
     onSubmit: handleSubmit(onValid, onInvalid),
-    isLoadingGenerateQuestion,
+    isLoadingGenerateQuestion:
+      isLoadingGenerateQuestion || isLoadingGenerateQuestionUpload,
   };
 };
 
